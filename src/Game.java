@@ -48,7 +48,7 @@ public class Game {
         //check case where out of boundsd
         //change the field for userrow
 		
-        userRow++;
+        userRow--;
         
         //shift the user picture up in the array
         Location loc = new Location(userRow, 0);

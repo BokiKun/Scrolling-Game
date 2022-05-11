@@ -72,7 +72,6 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 	// otherwise returns the code for the last key pressed.
 	public int checkLastKeyPressed() {
 		final int key = lastKeyPressed;
-		lastKeyPressed = -1;
 		return key;
 	}
 
