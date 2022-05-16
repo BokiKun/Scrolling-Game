@@ -54,9 +54,9 @@ public class Game {
         
         //shift the user picture up in the array
         Location loc = new Location(userRow, 0);
-        grid.setImage(loc, "user.gif");
+        grid.setImage(loc, "images/user.gif");
         
-        Location oldLoc = new Location(userRow+1, 0);
+        Location oldLoc = new Location(userRow-1, 0);
         grid.setImage(oldLoc, null);
 				}
 
@@ -65,20 +65,19 @@ public class Game {
 
   if(key == 83){
         //check case where out of boundsd
-			if(userRow != grid.getNumRows()-1)
+			if(userRow > grid.getNumRows()-1)
         //change the field for userrow
 		
         userRow--;
         
         //shift the user picture up in the array
         Location loc = new Location(userRow, 0);
-        grid.setImage(loc, "user.gif");
+        grid.setImage(loc, "images/user.gif");
         
         Location oldLoc = new Location(userRow+1, 0);
         grid.setImage(oldLoc, null);
 				}
 
-  }
   }
   
   public void populateRightEdge(){
