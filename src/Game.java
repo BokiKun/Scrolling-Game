@@ -14,8 +14,9 @@ public class Game {
   
   public Game() {
 
-    grid = new Grid(5, 10);
-    userRow = 3;
+    grid = new Grid(20,25);
+		System.out.println(grid.getNumRows()/2);
+    userRow = (grid.getNumRows()/2);
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
@@ -46,6 +47,25 @@ public class Game {
     //set "w" key to move the plane up
     if(key == 38 || key == 73 || key==32 || key == 87){
         //check case where out of boundsd
+			if(userRow != 0) {
+        //change the field for userrow
+		
+        userRow++;
+        
+        //shift the user picture up in the array
+        Location loc = new Location(userRow, 0);
+        grid.setImage(loc, "user.gif");
+        
+        Location oldLoc = new Location(userRow+1, 0);
+        grid.setImage(oldLoc, null);
+				}
+
+  }
+    //if I push down arrow, then plane goes down
+
+  if(key == 83){
+        //check case where out of boundsd
+			if(userRow != grid.getNumRows()-1)
         //change the field for userrow
 		
         userRow--;
@@ -56,11 +76,9 @@ public class Game {
         
         Location oldLoc = new Location(userRow+1, 0);
         grid.setImage(oldLoc, null);
+				}
 
   }
-    //if I push down arrow, then plane goes down
-
-
   }
   
   public void populateRightEdge(){
