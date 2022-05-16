@@ -65,7 +65,7 @@ public class Game {
 
   if(key == 83){
         //check case where out of boundsd
-			if(userRow > grid.getNumRows()-1)
+			if(userRow < grid.getNumRows()-1)
         //change the field for userrow
 		
         userRow--;
