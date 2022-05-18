@@ -7,6 +7,7 @@ public class Game {
 
   private Grid grid;
   private int userRow;
+  private int userCol;
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
@@ -17,6 +18,7 @@ public class Game {
     grid = new Grid(20,25,"images/bg.png");
 		System.out.println(grid.getNumRows()/2);
     userRow = (grid.getNumRows()/2);
+    userCol = (grid.getNumCols()/2);
     msElapsed = 0;
     timesGet = 0;
     timesAvoid = 0;
@@ -50,7 +52,7 @@ public class Game {
 			if(userRow != 0) {
         //change the field for userrow
 		
-        userRow++;
+        userRow--;
         
         //shift the user picture up in the array
         Location loc = new Location(userRow, 0);
@@ -69,7 +71,7 @@ public class Game {
 			if(userRow < grid.getNumRows()-1)
         //change the field for userrow
 		
-        userRow--;
+        userRow++;
         
         //shift the user picture up in the array
         Location loc = new Location(userRow, 0);
@@ -80,14 +82,34 @@ public class Game {
 				}
         //goes left
     if(key==65 || key==74 || key==37){
+      if(userRow < grid.getNumCols()-1)
+        //change the field for userrow
+		
+        userCol--;
+        
+        //shift the user picture up in the array
+        Location loc = new Location(userRow, userCol);
+        grid.setImage(loc, userPic);
+        
+        Location oldLoc = new Location(userRow,userCol+1);
+        grid.setImage(oldLoc, null);
+				}
 
 
   
-    }
+  
         //goes right
-    if(key==68 || key==76 || key==39){
-
-
+    if(key==68 || key==76 || key==39){ 
+      if(userRow < grid.getNumCols()-1){
+      userCol++;
+        
+        //shift the user picture up in the array
+        Location loc = new Location(userRow,userCol);
+        grid.setImage(loc, userPic);
+        
+        Location oldLoc = new Location(userRow, userCol+1);
+        grid.setImage(oldLoc, null);
+      }
         }
 
   }
