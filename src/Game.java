@@ -10,11 +10,11 @@ public class Game {
   private int msElapsed;
   private int timesGet;
   private int timesAvoid;
-  private String userPic = "images/user.gif";
+  private String userPic = "images/traveler.png";
   
   public Game() {
 
-    grid = new Grid(20,25);
+    grid = new Grid(20,25,"images/bg.png");
 		System.out.println(grid.getNumRows()/2);
     userRow = (grid.getNumRows()/2);
     msElapsed = 0;
@@ -54,7 +54,7 @@ public class Game {
         
         //shift the user picture up in the array
         Location loc = new Location(userRow, 0);
-        grid.setImage(loc, "images/user.gif");
+        grid.setImage(loc, userPic);
         
         Location oldLoc = new Location(userRow-1, 0);
         grid.setImage(oldLoc, null);
@@ -73,7 +73,7 @@ public class Game {
         
         //shift the user picture up in the array
         Location loc = new Location(userRow, 0);
-        grid.setImage(loc, "images/user.gif");
+        grid.setImage(loc, userPic);
         
         Location oldLoc = new Location(userRow+1, 0);
         grid.setImage(oldLoc, null);
