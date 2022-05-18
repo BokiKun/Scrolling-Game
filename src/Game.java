@@ -82,7 +82,7 @@ public class Game {
 				}
         //goes left
     if(key==65 || key==74 || key==37){
-      if(userRow < grid.getNumCols()-1)
+      if(userCol != 0){
         //change the field for userrow
 		
         userCol--;
@@ -94,13 +94,14 @@ public class Game {
         Location oldLoc = new Location(userRow,userCol+1);
         grid.setImage(oldLoc, null);
 				}
+      }
 
 
   
   
         //goes right
     if(key==68 || key==76 || key==39){ 
-      if(userRow < grid.getNumCols()-1){
+      if(userRow < grid.getNumCols()-1)
       userCol++;
         
         //shift the user picture up in the array
@@ -109,8 +110,9 @@ public class Game {
         
         Location oldLoc = new Location(userRow, userCol-1);
         grid.setImage(oldLoc, null);
-      }
+      
         }
+      
 
   }
   
