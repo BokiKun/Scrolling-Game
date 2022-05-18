@@ -15,7 +15,7 @@ public class Game {
   
   public Game() {
 
-    grid = new Grid(20,25,"images/bg.png");
+    grid = new Grid(20,26,"images/bg.png");
 		System.out.println(grid.getNumRows()/2);
     userRow = (grid.getNumRows()/2);
     userCol = (grid.getNumCols()/2);
@@ -23,7 +23,7 @@ public class Game {
     timesGet = 0;
     timesAvoid = 0;
     updateTitle();
-    grid.setImage(new Location(userRow, 0), userPic);
+    grid.setImage(new Location(userRow, userCol), userPic);
   }
   
   public void play() {
@@ -55,10 +55,10 @@ public class Game {
         userRow--;
         
         //shift the user picture up in the array
-        Location loc = new Location(userRow, 0);
+        Location loc = new Location(userRow, userCol);
         grid.setImage(loc, userPic);
         
-        Location oldLoc = new Location(userRow-1, 0);
+        Location oldLoc = new Location(userRow+1, userCol);
         grid.setImage(oldLoc, null);
 
 				}
@@ -74,10 +74,10 @@ public class Game {
         userRow++;
         
         //shift the user picture up in the array
-        Location loc = new Location(userRow, 0);
+        Location loc = new Location(userRow, userCol);
         grid.setImage(loc, userPic);
         
-        Location oldLoc = new Location(userRow+1, 0);
+        Location oldLoc = new Location(userRow-1, userCol);
         grid.setImage(oldLoc, null);
 				}
         //goes left
@@ -107,7 +107,7 @@ public class Game {
         Location loc = new Location(userRow,userCol);
         grid.setImage(loc, userPic);
         
-        Location oldLoc = new Location(userRow, userCol+1);
+        Location oldLoc = new Location(userRow, userCol-1);
         grid.setImage(oldLoc, null);
       }
         }
