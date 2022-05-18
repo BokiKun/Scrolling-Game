@@ -58,12 +58,13 @@ public class Game {
         
         Location oldLoc = new Location(userRow-1, 0);
         grid.setImage(oldLoc, null);
+
 				}
 
   }
     //if I push down arrow, then plane goes down
 
-  if(key == 83){
+    if(key == 83 || key==75 || key==40){
         //check case where out of boundsd
 			if(userRow < grid.getNumRows()-1)
         //change the field for userrow
@@ -77,6 +78,17 @@ public class Game {
         Location oldLoc = new Location(userRow+1, 0);
         grid.setImage(oldLoc, null);
 				}
+        //goes left
+    if(key==65 || key==74 || key==37){
+
+
+  
+    }
+        //goes right
+    if(key==68 || key==76 || key==39){
+
+
+        }
 
   }
   
