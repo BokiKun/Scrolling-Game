@@ -29,14 +29,14 @@ public class Game {
     public void play() {
   
       while (!isGameOver()) {
-        grid.pause(100);
+        grid.pause(50);
         handleKeyPress();
         if (msElapsed % 300 == 0) {
           scrollLeft();
           populateRightEdge();
         }
         updateTitle();
-        msElapsed += 100;
+        msElapsed += 50;
       }
     }
     
