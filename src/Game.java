@@ -18,7 +18,7 @@ public class Game {
       grid = new Grid(20,26,"images/bg.png");
           System.out.println(grid.getNumRows()/2);
       userRow = (grid.getNumRows()/2);
-      userCol = (grid.getNumCols()/2);
+      userCol = (0);
       msElapsed = 0;
       timesGet = 0;
       timesAvoid = 0;
