@@ -23,9 +23,9 @@ public class Game {
       grid = new Grid(15,20,"images/bg.png");
           System.out.println(grid.getNumRows()/2);
       userRow = (grid.getNumRows()/2)+1;
-      userCol = (0);
+      userCol = 0;
       msElapsed = 0;
-      timesGet = 0;
+      particleCount = 0;
       timesAvoid = 0;
       updateTitle();
       grid.setImage(new Location(userRow, userCol), userPic);
@@ -51,7 +51,7 @@ public class Game {
       int key = grid.checkLastKeyPressed();
       System.out.println(key);
   
-      //set "w" key to move the plane up
+      //goes up
       if(key == 38 || key == 73 || key==32 || key == 87){
           //check case where out of boundsd
               if(userRow != 0) {
@@ -70,7 +70,6 @@ public class Game {
   
     }
       //if I push down arrow, then plane goes down
-  
       if(key == 83 || key==75 || key==40){
           //check case where out of boundsd
               if(userRow < grid.getNumRows()-1)
@@ -100,10 +99,6 @@ public class Game {
           grid.setImage(oldLoc, null);
                   }
         }
-  
-  
-    
-    
           //goes right
       if(key==68 || key==76 || key==39){ 
         if(userCol < grid.getNumCols()-1)
@@ -144,9 +139,16 @@ public class Game {
     }
     
     public void handleCollision(Location loc) {
-  
-    }
-    
+/* if(loc.getImage().equals(bomb)) {
+		timesAvoid++;
+		System.out.println("Traveler Hit " + timesAvoid + " times");
+	}
+			if(getImage(loc).equals(particle)) {
+				particleCount++;
+				System.out.println("Traveler collected " + timesAvoid + " particles");
+			}
+    */
+			}
     public int getScore() {
       return 0;
     }
