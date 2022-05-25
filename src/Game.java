@@ -10,10 +10,10 @@ public class Game {
     private int userCol;
     private int msElapsed;
     private int timesAvoid;
-   // private int mondstadtScore;
-   //private int liyueScore;
-  //private int inazumaScore;
-    //private int particleCount;
+    private int mondstadtScore;
+    private int liyueScore;
+    private int inazumaScore;
+    private int particleCount;
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
     private String particle= "images/getA.png";
