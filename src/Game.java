@@ -10,10 +10,10 @@ public class Game {
     private int userCol;
     private int msElapsed;
     private int timesAvoid;
-    private int mondstadtScore;
-    private int liyueScore;
-    private int inazumaScore;
-    private int particleCount;
+   // private int mondstadtScore;
+   //private int liyueScore;
+  //private int inazumaScore;
+    //private int particleCount;
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
     private String particle= "images/getA.png";
@@ -130,11 +130,22 @@ public class Game {
     }
     }
     
-    public void scrollLeft(){
+    public void scrollLeft(){ 
+      int lastRow = grid.getNumRows()-1;
+      int lastCol = grid.getNumCols()-1;
 
-      //for(int i=0//not going to use handleCollision; i<grid.getNumCols();i++)
-        //for(int c=0;c<grid.getNumRows();c++)
+      for(int c=0; c<lastCol;c++){
+        int leftCol = c+1;
+        int rightCol = c;
+        for(int r=0;r<lastRow;r++){
+          Location rightLoc = new Location(r, rightCol);
+          Location leftLoc = new Location(r, leftCol);
 
+          grid.setImage(leftLoc, bomb);
+          grid.setImage(rightLoc, null);
+
+        }
+      }
   
     }
     
