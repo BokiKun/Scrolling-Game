@@ -11,8 +11,10 @@ public class Game {
     private int msElapsed;
     private int timesGet;
     private int timesAvoid;
-    private int anemoParticles;
+    private int anemoParticlesCount;
     private String userPic = "images/traveler.png";
+    private String bomb = "images/avoid.png";
+    private String anemoParticles= "images/get.png";
     
     public Game() {
   
@@ -102,7 +104,7 @@ public class Game {
     
           //goes right
       if(key==68 || key==76 || key==39){ 
-        if(userRow < grid.getNumCols()-1)
+        if(userCol < grid.getNumCols()-1)
         userCol++;
           
           //shift the user picture up in the array
