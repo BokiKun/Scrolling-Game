@@ -9,17 +9,14 @@ public class Game {
     private int userRow;
     private int userCol;
     private int msElapsed;
-    private int timesGet;
     private int timesAvoid;
     private int mondstadtScore;
     private int liyueScore;
     private int inazumaScore;
-    private int anemoParticlesCount;
-    private int geoParticleCount;
-    private int electroParticleCount;
+    private int particleCount;
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
-    private String anemoPartic les= "images/get.png";
+    private String particle= "images/getA.png";
     
     public Game() {
   
