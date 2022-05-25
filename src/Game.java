@@ -20,7 +20,7 @@ public class Game {
     
     public Game() {
   
-      grid = new Grid(15,20,"images/bg.png");
+      grid = new Grid(15,20,"images/bgMondstadt");
           System.out.println(grid.getNumRows()/2);
       userRow = (grid.getNumRows()/2)+1;
       userCol = 0;
