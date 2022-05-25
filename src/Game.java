@@ -11,7 +11,12 @@ public class Game {
     private int msElapsed;
     private int timesGet;
     private int timesAvoid;
+    private int mondstadtScore;
+    private int liyueScore;
+    private int inazumaScore;
     private int anemoParticlesCount;
+    private int geoParticleCount;
+    private int electroParticleCount;
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
     private String anemoParticles= "images/get.png";
@@ -120,7 +125,17 @@ public class Game {
     }
     
     public void populateRightEdge(){
-  
+      int lastRow = grid.getNumRows()-1;
+      int lastCol = grid.getNumCols()-1;
+    for(int i=0; i<=lastRow;i++){
+    Location loc = new Location(i,lastCol);
+      double random = Math.random();
+      double thresh = 0.2;
+
+      if(random < thresh){
+      grid.setImage(loc,bomb);
+    }
+    }
     }
     
     public void scrollLeft(){
