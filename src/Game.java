@@ -10,10 +10,11 @@ public class Game {
     private int userCol;
     private int msElapsed;
     private int timesAvoid;
-   // private int mondstadtScore;
-   //private int liyueScore;
-  //private int inazumaScore;
-    //private int particleCount;
+    private int timesGet;
+    private int mondstadtScore;
+    private int liyueScore;
+    private int inazumaScore;
+    private int particleCount;
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
     private String particle= "images/getA.png";
@@ -145,8 +146,8 @@ public class Game {
         for(int r=0;r<lastRow;r++){
           Location rightLoc = new Location(r, rightCol);
           Location leftLoc = new Location(r, leftCol);
-
-          grid.setImage(leftLoc, bomb);
+          String rightPic = grid.getImage(rightLoc);
+          grid.setImage(leftLoc, rightPic);
           grid.setImage(rightLoc, null);
 
         }
