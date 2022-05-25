@@ -11,6 +11,7 @@ public class Game {
     private int msElapsed;
     private int timesGet;
     private int timesAvoid;
+    private int anemoParticles;
     private String userPic = "images/traveler.png";
     
     public Game() {
@@ -121,6 +122,10 @@ public class Game {
     }
     
     public void scrollLeft(){
+
+      //for(int i=0; i<grid.getNumCols();i++)
+        //for(int c=0;c<grid.getNumRows();c++)
+
   
     }
     
