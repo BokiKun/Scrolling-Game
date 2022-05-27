@@ -29,7 +29,7 @@ public class Game {
       particleCount = 0;
       timesAvoid = 0;
       updateTitle();
-      grid.setImage(new Location(userRow, userCol), userPic);
+      grid.setImage(getUserLoc(), userPic);
     }
     
     public void play() {
@@ -37,7 +37,7 @@ public class Game {
       while (!isGameOver()) {
         grid.pause(50);
         handleKeyPress();
-        if (msElapsed % 300 == 0) {
+        if (msElapsed % 250 == 0) {
           scrollLeft();
           populateRightEdge();
         }
@@ -130,11 +130,16 @@ public class Game {
     }
     }
     }
+	
+	public Location getUserLoc() {
+		Location userLoc = new Location(userRow, userCol); 
+		return userLoc;
+	}
     
     public void scrollLeft(){ 
       int lastRow = grid.getNumRows()-1;
       int lastCol = grid.getNumCols()-1;
-      Location userLoc = new Location(userRow, userCol);
+      getUserLoc();
 
       for(int c=1; c<=lastCol;c++){
         int leftCol = c-1;
@@ -144,11 +149,9 @@ public class Game {
           Location leftLoc = new Location(r, leftCol);
           String rightPic = grid.getImage(rightLoc);
         if(!userPic.equals(rightPic)){
-          grid.setImage(userLoc, userPic);
+          grid.setImage(getUserLoc(), userPic);
           grid.setImage(leftLoc, rightPic);
           grid.setImage(rightLoc, null);
-
-          
               }
           }
         }
@@ -159,7 +162,7 @@ public class Game {
     public void handleCollision(Location loc) {
    /*   if(loc.equals(bomb)) {
 		timesAvoid++;
-		System.out.println("Traveler Hit " + timesAvoid + " times");
+		System.out.println("Traveler hit " + timesAvoid + " times");
 	}
 			if(loc.equals(particle)) {
 				particleCount++;
