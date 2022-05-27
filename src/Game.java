@@ -9,7 +9,7 @@ public class Game {
     private int userRow;
     private int userCol;
     private int msElapsed;
-    private int timesAvoid;
+    private int timesAvoid; 
     private int timesGet;
     private int mondstadtScore;
     private int liyueScore;
@@ -123,7 +123,7 @@ public class Game {
     for(int i=0; i<=lastRow;i++){
     Location loc = new Location(i,lastCol);
       double random = Math.random();
-      double thresh = 0.2;
+      double thresh = 0.065;
 
       if(random < thresh){
       grid.setImage(loc,bomb);
@@ -135,33 +135,37 @@ public class Game {
       int lastRow = grid.getNumRows()-1;
       int lastCol = grid.getNumCols()-1;
 
-      for(int c=0; c<lastCol;c++){
-        int leftCol = c+1;
+
+      for(int c=1; c<=lastCol;c++){
+        int leftCol = c-1;
         int rightCol = c;
-        for(int r=0;r<lastRow;r++){
-        if(!"traveler.png".equals(rightPic))
+        for(int r=0;r<=lastRow;r++){
           Location rightLoc = new Location(r, rightCol);
           Location leftLoc = new Location(r, leftCol);
           String rightPic = grid.getImage(rightLoc);
+        if(!userPic.equals(rightPic)){
           grid.setImage(leftLoc, rightPic);
           grid.setImage(rightLoc, null);
 
+          
+        }
         }
       }
   
     }
     
     public void handleCollision(Location loc) {
-/* if(loc.getImage().equals(bomb)) {
+   /*   if(loc.equals(bomb)) {
 		timesAvoid++;
 		System.out.println("Traveler Hit " + timesAvoid + " times");
 	}
-			if(getImage(loc).equals(particle)) {
+			if(loc.equals(particle)) {
 				particleCount++;
 				System.out.println("Traveler collected " + timesAvoid + " particles");
 			}
-    */
+      */
 			}
+      
     public int getScore() {
       return 0;
     }
