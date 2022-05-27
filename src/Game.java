@@ -134,7 +134,7 @@ public class Game {
     public void scrollLeft(){ 
       int lastRow = grid.getNumRows()-1;
       int lastCol = grid.getNumCols()-1;
-
+      Location userLoc = new Location(userRow, userCol);
 
       for(int c=1; c<=lastCol;c++){
         int leftCol = c-1;
@@ -144,15 +144,17 @@ public class Game {
           Location leftLoc = new Location(r, leftCol);
           String rightPic = grid.getImage(rightLoc);
         if(!userPic.equals(rightPic)){
+          grid.setImage(userLoc, userPic);
           grid.setImage(leftLoc, rightPic);
           grid.setImage(rightLoc, null);
 
           
-        }
+              }
+          }
         }
       }
-  
-    }
+
+
     
     public void handleCollision(Location loc) {
    /*   if(loc.equals(bomb)) {
