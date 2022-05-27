@@ -10,10 +10,7 @@ public class Game {
     private int userCol;
     private int msElapsed;
     private int timesAvoid;
-<<<<<<< HEAD
     private int timesGet;
-=======
->>>>>>> e1b3219f879a93a4b42275cbd6fc7db2c09e3da4
     private int mondstadtScore;
     private int liyueScore;
     private int inazumaScore;
@@ -142,6 +139,7 @@ public class Game {
         int leftCol = c+1;
         int rightCol = c;
         for(int r=0;r<lastRow;r++){
+        if(!"traveler.png".equals(rightPic))
           Location rightLoc = new Location(r, rightCol);
           Location leftLoc = new Location(r, leftCol);
           String rightPic = grid.getImage(rightLoc);
