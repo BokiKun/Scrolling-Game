@@ -46,7 +46,22 @@ public class Game {
       }
     }
     
-    public void handleKeyPress(){
+		 public void level(int level){
+		if (level == 1) {
+		grid.setBackground("images/bgMondstadt");
+		particle = "images/getA.png";
+	}
+	if (level == 2) {
+			grid.setBackground("images/bgLiyue");
+		particle = "images/getG.png";
+	}
+	if (level == 2) {
+			grid.setBackground("images/bgLiyue");
+		particle = "images/getG.png";
+	}
+}
+	
+		public void handleKeyPress(){
   
       //check last key pressed
       int key = grid.checkLastKeyPressed();
@@ -131,7 +146,7 @@ public class Game {
     }
     }
 	
-	public Location getUserLoc() {
+		public Location getUserLoc() {
 		Location userLoc = new Location(userRow, userCol); 
 		return userLoc;
 	}
