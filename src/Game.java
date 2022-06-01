@@ -41,7 +41,7 @@ public class Game {
         if (msElapsed % 250 == 0) {
           scrollLeft();
           populateRightEdge();
-          handleCollision();
+          handleCollision(getUserLoc());
         }
         updateTitle();
         msElapsed += 50;
@@ -168,28 +168,21 @@ public class Game {
           Location leftLoc = new Location(r, leftCol);
           String rightPic = grid.getImage(rightLoc);
         if(!userPic.equals(rightPic)){
-<<<<<<< HEAD
-
-
-
-
-=======
           grid.setImage(getUserLoc(), userPic);
->>>>>>> 8f0508b0d13e21faab65c5d90b063873a5f3026d
           grid.setImage(leftLoc, rightPic);
           grid.setImage(rightLoc, null);
               }
           }
         }
 
-        grid.setImage(userLoc, userPic);
+        grid.setImage(getUserLoc(), userPic);
 
 
       }
 
 
     
-    public void handleCollision() {
+    public void handleCollision(Location Loc) {
       Location userLoc= getUserLoc();
       for(int c=1; c<=grid.getNumCols()-1;c++){
         for(int r=0;r<=grid.getNumRows()-1;r++){
