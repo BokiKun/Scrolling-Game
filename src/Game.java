@@ -18,6 +18,7 @@ public class Game {
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
     private String particle= "images/getA.png";
+
     
     public Game() {
   
@@ -40,6 +41,7 @@ public class Game {
         if (msElapsed % 300 == 0) {
           scrollLeft();
           populateRightEdge();
+          handleCollision();
         }
         updateTitle();
         msElapsed += 50;
@@ -128,6 +130,7 @@ public class Game {
       if(random < thresh){
       grid.setImage(loc,bomb);
     }
+
     }
     }
     
@@ -135,6 +138,7 @@ public class Game {
       int lastRow = grid.getNumRows()-1;
       int lastCol = grid.getNumCols()-1;
       Location userLoc = new Location(userRow, userCol);
+
 
       for(int c=1; c<=lastCol;c++){
         int leftCol = c-1;
@@ -144,7 +148,10 @@ public class Game {
           Location leftLoc = new Location(r, leftCol);
           String rightPic = grid.getImage(rightLoc);
         if(!userPic.equals(rightPic)){
-          grid.setImage(userLoc, userPic);
+
+
+
+
           grid.setImage(leftLoc, rightPic);
           grid.setImage(rightLoc, null);
 
@@ -152,11 +159,23 @@ public class Game {
               }
           }
         }
+
+        grid.setImage(userLoc, userPic);
+
+
       }
 
 
     
-    public void handleCollision(Location loc) {
+    public void handleCollision() {
+      Location userLoc= getUserLoc();
+      for(int c=1; c<=grid.getNumCols()-1;c++){
+        for(int r=0;r<=grid.getNumRows()-1;r++){
+          if (userPic.equals(bomb)){
+            System.out.println("over");
+          }
+        }
+      }
    /*   if(loc.equals(bomb)) {
 		timesAvoid++;
 		System.out.println("Traveler Hit " + timesAvoid + " times");
@@ -178,7 +197,12 @@ public class Game {
     
     public boolean isGameOver() {
       return false;
+      //ways to wing 1) reach end or 2)hit bombs 3 times
     }
-      
+
+    public void addGravity(){
+
+    }
+    
   
   }
