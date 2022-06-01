@@ -144,6 +144,7 @@ public class Game {
 
       if(random < thresh){
       grid.setImage(loc,bomb);
+      handleCollision(loc);
     }
 
     }
@@ -183,24 +184,12 @@ public class Game {
 
     
     public void handleCollision(Location Loc) {
-      Location userLoc= getUserLoc();
-      for(int c=1; c<=grid.getNumCols()-1;c++){
-        for(int r=0;r<=grid.getNumRows()-1;r++){
-          if (userPic.equals(bomb)){
+          if (Loc==getUserLoc()){
             System.out.println("over");
           }
         }
-      }
-   /*   if(loc.equals(bomb)) {
-		timesAvoid++;
-		System.out.println("Traveler hit " + timesAvoid + " times");
-	}
-			if(loc.equals(particle)) {
-				particleCount++;
-				System.out.println("Traveler collected " + timesAvoid + " particles");
-			}
-      */
-			}
+      
+
       
     public int getScore() {
       return 0;
