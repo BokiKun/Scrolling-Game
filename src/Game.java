@@ -50,8 +50,9 @@ public class Game {
       }
     }
 	
-	public void splashScreen(int level){
+	public void splashScreen(){
 	splash = new Grid(5, 7, "");
+		setBadges();
 	}
 		
 	public void level(int level){
