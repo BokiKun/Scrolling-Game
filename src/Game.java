@@ -6,7 +6,6 @@
 public class Game {
 
     private Grid grid;
-		private Grid splash;
     private int userRow;
     private int userCol;
     private int msElapsed;
@@ -19,7 +18,6 @@ public class Game {
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
     private String particle= "images/getA.png";
-		private String region;
 
     
     public Game() {
@@ -36,7 +34,7 @@ public class Game {
     }
     
     public void play() {
-			level(1);
+  
       while (!isGameOver()) {
         grid.pause(50);
         handleKeyPress();
@@ -46,62 +44,22 @@ public class Game {
           handleCollision(getUserLoc());
         }
         updateTitle();
-	    msElapsed += 50;
+        msElapsed += 50;
       }
     }
-	
-	public void splashScreen(int level){
-	splash = new Grid(5, 7, "");
-	}
-		
-	public void level(int level){
+    
+		 public void level(int level){
 		if (level == 1) {
 		grid.setBackground("images/bgMondstadt");
 		particle = "images/getA.png";
-		region = "Mondstadt";
 	}
 	if (level == 2) {
 			grid.setBackground("images/bgLiyue");
 		particle = "images/getG.png";
-		region = "Liyue";
 	}
-	if (level == 3) {
-			grid.setBackground("images/bgInazuma");
-		particle = "images/getE.png";
-		region = "Inazuma";
-	}
-}
-
-public void setBadges() {
-	//mondstadt
-	Location badgeLoc = new Location(3,2);
-	splash.setImage(badgeLoc, "images/badges/blank.png");
-	if (mondstadtScore > 10000) {
-		splash.setImage(badgeLoc, "images/badges/bronze.png");
-	} else if(mondstadtScore > 200000 && mondstadtScore < 30000) {
-		splash.setImage(badgeLoc, "images/badges/silver.png");
-	} else if(mondstadtScore > 30000) {
-		splash.setImage(badgeLoc, "images/badges/gold.png");
-	}
-	//liyue
-	badgeLoc = new Location(3,4);
-	splash.setImage(badgeLoc, "images/badges/blank.png");
-if (liyueScore > 10000) {
-		splash.setImage(badgeLoc, "images/badges/bronze.png");
-	} else if(liyueScore > 200000 && liyueScore < 30000) {
-		splash.setImage(badgeLoc, "images/badges/silver.png");
-	} else if(liyueScore > 300000) {
-		splash.setImage(badgeLoc, "images/badges/gold.png");
-	}
-//inazuma
-	badgeLoc = new Location(3,6);
-	splash.setImage(badgeLoc, "images/badges/blank.png");
-if(inazumaScore > 10000) {
-		splash.setImage(badgeLoc, "images/badges/bronze.png");
-	} else if(inazumaScore > 200000 && inazumaScore < 30000) {
-		splash.setImage(badgeLoc, "images/badges/silver.png");
-	} else if(inazumaScore < 30000) {
-		splash.setImage(badgeLoc, "images/badges/gold.png");
+	if (level == 2) {
+			grid.setBackground("images/bgLiyue");
+		particle = "images/getG.png";
 	}
 }
 	
@@ -202,6 +160,7 @@ if(inazumaScore > 10000) {
       int lastCol = grid.getNumCols()-1;
       getUserLoc();
 
+
       for(int c=1; c<=lastCol;c++){
         int leftCol = c-1;
         int rightCol = c;
@@ -215,22 +174,30 @@ if(inazumaScore > 10000) {
           grid.setImage(rightLoc, null);
               }
           }
-				}
+        }
+
         grid.setImage(getUserLoc(), userPic);
+
+
       }
 
+
+    
     public void handleCollision(Location Loc) {
           if (Loc==getUserLoc()){
             System.out.println("over");
           }
+
         }
-         
+      
+
+      
     public int getScore() {
-      return particleCount + (msElapsed/250);
+      return 0;
     }
     
     public void updateTitle() {
-      grid.setTitle(region + "  Score:  " + getScore());
+      grid.setTitle("Game:  " + getScore());
     }
     
     public boolean isGameOver() {
