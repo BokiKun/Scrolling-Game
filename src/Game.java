@@ -18,7 +18,7 @@ public class Game {
     private int particleCount;
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
-    private String particle= "images/getA.png";
+    private String particle;
 		private String region;
 
     
@@ -50,8 +50,9 @@ public class Game {
       }
     }
 	
-	public void splashScreen(int level){
+	public void splashScreen()){
 	splash = new Grid(5, 7, "");
+		setBadges();
 	}
 		
 	public void level(int level){
