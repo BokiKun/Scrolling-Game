@@ -7,6 +7,7 @@ public class Game {
 
     private Grid grid;
 		private Grid splash;
+		private Grid lvlComplete;
     private int userRow;
     private int userCol;
     private int msElapsed;
@@ -15,27 +16,33 @@ public class Game {
     private int mondstadtScore;
     private int liyueScore;
     private int inazumaScore;
+		private int highestScore;
     private int particleCount;
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
-    private String particle= "images/getA.png";
+    private String particle = "images/getA.png";
 		private String region;
 
     
     public Game() {
-  
-      grid = new Grid(15,20,"images/bgMondstadt");
-          System.out.println(grid.getNumRows()/2);
-      userRow = (grid.getNumRows()/2)+1;
-      userCol = 0;
+			splash = new Grid(5, 7, "");
+			setBadges();
+    	grid = new Grid(15,20,"");
+      System.out.println(grid.getNumRows()/2);
       msElapsed = 0;
       particleCount = 0;
       timesAvoid = 0;
       updateTitle();
-      grid.setImage(getUserLoc(), userPic);
+      
     }
     
     public void play() {
+		Location selection = splash.waitForClick();
+		if (selection.equals(new Location(2,1))) {
+			System.out.println("Starting Level One");
+			level(1);
+		}
+			
 			level(1);
       while (!isGameOver()) {
         grid.pause(50);
@@ -49,13 +56,12 @@ public class Game {
 	    msElapsed += 50;
       }
     }
-	
-	public void splashScreen(){
-	splash = new Grid(5, 7, "");
-		setBadges();
-	}
 		
 	public void level(int level){
+		userRow = (grid.getNumRows()/2)+1;
+    userCol = 0;
+		grid.setImage(getUserLoc(), userPic);
+		grid = new Grid(15,20,"images/bgMondstadt");
 		if (level == 1) {
 		grid.setBackground("images/bgMondstadt");
 		particle = "images/getA.png";
@@ -97,7 +103,7 @@ if (liyueScore > 10000) {
 //inazuma
 	badgeLoc = new Location(3,6);
 	splash.setImage(badgeLoc, "images/badges/blank.png");
-if(inazumaScore > 10000) {
+if(inazumaScore < 10000) {
 		splash.setImage(badgeLoc, "images/badges/bronze.png");
 	} else if(inazumaScore > 200000 && inazumaScore < 30000) {
 		splash.setImage(badgeLoc, "images/badges/silver.png");
@@ -209,12 +215,17 @@ if(inazumaScore > 10000) {
         for(int r=0;r<=lastRow;r++){
           Location rightLoc = new Location(r, rightCol);
           Location leftLoc = new Location(r, leftCol);
+					
           String rightPic = grid.getImage(rightLoc);
-        if(!userPic.equals(rightPic)){
+        
+					//if user is left pic and bomb or particle is rightpic
+					//handlecollision(loc)
+					
+					if(!userPic.equals(rightPic)){
           grid.setImage(getUserLoc(), userPic);
           grid.setImage(leftLoc, rightPic);
           grid.setImage(rightLoc, null);
-              }
+          }
           }
 				}
         grid.setImage(getUserLoc(), userPic);
