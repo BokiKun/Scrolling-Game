@@ -17,12 +17,9 @@ public class Game {
     private int particleCount;
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
-<<<<<<< HEAD
     private String particle;
 		private String region;
-=======
     private String particle= "images/getA.png";
->>>>>>> origin/main
 
     
     public Game() {
@@ -52,7 +49,7 @@ public class Game {
         msElapsed += 50;
       }
     }
-<<<<<<< HEAD
+
 	
 	public void splashScreen()){
 	splash = new Grid(5, 7, "");
@@ -60,10 +57,10 @@ public class Game {
 	}
 		
 	public void level(int level){
-=======
+
     
 		 public void level(int level){
->>>>>>> origin/main
+
 		if (level == 1) {
 		grid.setBackground("images/bgMondstadt");
 		particle = "images/getA.png";
