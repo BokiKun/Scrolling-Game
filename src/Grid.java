@@ -87,7 +87,7 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 		while (true) {
 			final Location clicked = this.checkLastLocationClicked();
 			if (clicked != null) {
-				System.out.print("Row:" + clicked.getRow() + " Col:" + clicked.getCol());
+				System.out.print("Row:" + (clicked.getRow()) + " Col:" + (clicked.getCol())+ "\n");
 				Location button = new Location(clicked.getRow(), clicked.getCol());
 				return button;
 			} else {

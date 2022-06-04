@@ -7,28 +7,24 @@ public class Game {
 
     private Grid grid;
 		private Grid splash;
-		private Grid lvlComplete;
     private int userRow;
     private int userCol;
     private int msElapsed;
     private int timesAvoid; 
-    private int timesGet;
+	  private int particleCount;
     private int mondstadtScore;
     private int liyueScore;
     private int inazumaScore;
-		private int highestScore;
-    private int particleCount;
+		private int level;
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
-    private String particle = "images/getA.png";
+    private String particle;
 		private String region;
 
     
     public Game() {
 			splash = new Grid(5, 7, "");
-			setBadges();
     	grid = new Grid(15,20,"");
-      System.out.println(grid.getNumRows()/2);
       msElapsed = 0;
       particleCount = 0;
       timesAvoid = 0;
@@ -37,13 +33,27 @@ public class Game {
     }
     
     public void play() {
+			boolean start = true;
+			while (start) {
+		//start Game
+		splash = new Grid(5, 7, "");
+		setBadges();
+		boolean isValid = false;
+		while(!isValid) {
 		Location selection = splash.waitForClick();
-		if (selection.equals(new Location(2,1))) {
-			System.out.println("Starting Level One");
+		if (selection.equals(new Location(3, 2))) {
 			level(1);
+			isValid = true;
 		}
-			
-			level(1);
+		if (selection.equals(new Location(3, 4))) {
+			level(2);
+			isValid = true;
+		}
+		if (selection.equals(new Location(3, 6))) {
+			level(3);
+			isValid = true;
+		}
+			}
       while (!isGameOver()) {
         grid.pause(50);
         handleKeyPress();
@@ -55,20 +65,24 @@ public class Game {
         updateTitle();
 	    msElapsed += 50;
       }
+			updateScore();
+			grid.showMessageDialog("You have reached the goal!");
+			}
     }
-		
-	public void level(int level){
+	
+		public void level(int level){
 		userRow = (grid.getNumRows()/2)+1;
     userCol = 0;
+		this.level = level;
 		grid.setImage(getUserLoc(), userPic);
-		grid = new Grid(15,20,"images/bgMondstadt");
-		if (level == 1) {
+		grid = new Grid(15,20,"");
+	if (level == 1) {
 		grid.setBackground("images/bgMondstadt");
 		particle = "images/getA.png";
 		region = "Mondstadt";
 	}
 	if (level == 2) {
-			grid.setBackground("images/bgLiyue");
+		grid.setBackground("images/bgLiyue");
 		particle = "images/getG.png";
 		region = "Liyue";
 	}
@@ -77,39 +91,44 @@ public class Game {
 		particle = "images/getE.png";
 		region = "Inazuma";
 	}
+	System.out.println("Level " + level + " selected");
 }
 
-public void setBadges() {
+		public void setBadges() {
 	//mondstadt
 	Location badgeLoc = new Location(3,2);
 	splash.setImage(badgeLoc, "images/badges/blank.png");
-	if (mondstadtScore > 10000) {
-		splash.setImage(badgeLoc, "images/badges/bronze.png");
-	} else if(mondstadtScore > 200000 && mondstadtScore < 30000) {
-		splash.setImage(badgeLoc, "images/badges/silver.png");
-	} else if(mondstadtScore > 30000) {
+
+	if(mondstadtScore > 30000) {
 		splash.setImage(badgeLoc, "images/badges/gold.png");
-	}
+	} else if(mondstadtScore > 20000 && mondstadtScore < 30000) {
+		splash.setImage(badgeLoc, "images/badges/silver.png");
+	} else if (mondstadtScore > 10000) {
+		splash.setImage(badgeLoc, "images/badges/bronze.png");
+	} 
+	
 	//liyue
 	badgeLoc = new Location(3,4);
 	splash.setImage(badgeLoc, "images/badges/blank.png");
-if (liyueScore > 10000) {
-		splash.setImage(badgeLoc, "images/badges/bronze.png");
-	} else if(liyueScore > 200000 && liyueScore < 30000) {
-		splash.setImage(badgeLoc, "images/badges/silver.png");
-	} else if(liyueScore > 300000) {
+
+		if(liyueScore > 30000) {
 		splash.setImage(badgeLoc, "images/badges/gold.png");
-	}
+	} else if(liyueScore > 20000 && liyueScore < 30000) {
+		splash.setImage(badgeLoc, "images/badges/silver.png");
+	} else if (liyueScore > 10000) {
+		splash.setImage(badgeLoc, "images/badges/bronze.png");
+	} 
 //inazuma
 	badgeLoc = new Location(3,6);
 	splash.setImage(badgeLoc, "images/badges/blank.png");
-if(inazumaScore < 10000) {
-		splash.setImage(badgeLoc, "images/badges/bronze.png");
-	} else if(inazumaScore > 200000 && inazumaScore < 30000) {
-		splash.setImage(badgeLoc, "images/badges/silver.png");
-	} else if(inazumaScore < 30000) {
+
+			if(inazumaScore > 30000) {
 		splash.setImage(badgeLoc, "images/badges/gold.png");
-	}
+	} else if(inazumaScore > 20000 && inazumaScore < 30000) {
+		splash.setImage(badgeLoc, "images/badges/silver.png");
+	} else if(inazumaScore > 10000) {
+		splash.setImage(badgeLoc, "images/badges/bronze.png");
+	} 
 }
 	
 		public void handleKeyPress(){
@@ -236,9 +255,26 @@ if(inazumaScore < 10000) {
             System.out.println("over");
           }
         }
-         
+public void updateScore() {
+	if (isGameOver()) {
+		if(level == 1) {
+			mondstadtScore = getScore();
+		}
+		if(level == 2) {
+			liyueScore = getScore();
+		}
+		if(level == 3) {
+			inazumaScore = getScore();
+		}
+	}
+	msElapsed = 0;
+	timesAvoid = 0;
+	particleCount = 0;
+	
+}
+	
     public int getScore() {
-      return particleCount + (msElapsed/250);
+      return particleCount + (msElapsed*10);
     }
     
     public void updateTitle() {
@@ -246,7 +282,9 @@ if(inazumaScore < 10000) {
     }
     
     public boolean isGameOver() {
-      return false;
+			if (timesAvoid == 5) return true;
+			if ((msElapsed/250) > 50) return true;
+      else return false;
       //ways to wing 1) reach end or 2)hit bombs 3 times
     }
 
