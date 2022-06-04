@@ -34,6 +34,8 @@ public class Game {
     
     public void play() {
 			boolean start = true;
+      WavPlayer.play("sounds/Ricky Mondsat.wav");
+
 			while (start) {
 		//start Game
 		splash = new Grid(5, 7, "");
