@@ -23,7 +23,7 @@ public class Game {
 
     
     public Game() {
-			splash = new Grid(5, 7, "");
+			splash = new Grid(5,7, "images/splash.png");
     	grid = new Grid(15,20,"");
       msElapsed = 0;
       particleCount = 0;
@@ -34,11 +34,10 @@ public class Game {
     
     public void play() {
 			boolean start = true;
-      WavPlayer.play("sounds/Ricky Mondsat.wav");
+      //WavPlayer.play("sounds/Ricky Mondsat.wav");
 
 			while (start) {
 		//start Game
-		splash = new Grid(5, 7, "");
 		setBadges();
 		boolean isValid = false;
 		while(!isValid) {
@@ -77,26 +76,33 @@ public class Game {
     userCol = 0;
 		this.level = level;
 		grid.setImage(getUserLoc(), userPic);
-		grid = new Grid(15,20,"");
+		grid = new Grid("images/bgInazuma.png");
 	if (level == 1) {
-		grid.setBackground("images/bgMondstadt");
+		grid.setBackground("images/bgMondstadt.png");
 		particle = "images/getA.png";
 		region = "Mondstadt";
 	}
 	if (level == 2) {
-		grid.setBackground("images/bgLiyue");
+		grid.setBackground("images/bgLiyue.png");
 		particle = "images/getG.png";
 		region = "Liyue";
 	}
 	if (level == 3) {
-			grid.setBackground("images/bgInazuma");
+			grid.setBackground("images/bgInazuma.png");
 		particle = "images/getE.png";
 		region = "Inazuma";
 	}
 	System.out.println("Level " + level + " selected");
+	splash.close();
+	System.out.println("Splash Closed");
+
 }
 
 		public void setBadges() {
+		splash.setTitle("Level Selection");
+		grid.close();
+		System.out.println("Gameplay Closed");
+
 	//mondstadt
 	Location badgeLoc = new Location(3,2);
 	splash.setImage(badgeLoc, "images/badges/blank.png");
@@ -137,7 +143,7 @@ public class Game {
   
       //check last key pressed
       int key = grid.checkLastKeyPressed();
-      System.out.println(key);
+      System.out.print(key + " ");
   
       //goes up
       if(key == 38 || key == 73 || key==32 || key == 87){
