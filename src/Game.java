@@ -133,7 +133,7 @@ if(inazumaScore > 10000) {
       //if I push down arrow, then plane goes down
       if(key == 83 || key==75 || key==40){
           //check case where out of boundsd
-              if(userRow < grid.getNumRows()-1)
+            if(userRow < grid.getNumRows()-1){
           //change the field for userrow
           
           userRow++;
@@ -145,6 +145,11 @@ if(inazumaScore > 10000) {
           Location oldLoc = new Location(userRow-1, userCol);
           grid.setImage(oldLoc, null);
                   }
+              if(grid.equals(bomb) && (grid.checkLastKeyPressed()==83 || grid.checkLastKeyPressed()==75 || grid.checkLastKeyPressed()==40)){}
+                }
+
+
+
           //goes left
       if(key==65 || key==74 || key==37){
         if(userCol != 0){
