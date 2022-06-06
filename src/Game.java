@@ -24,6 +24,7 @@ public class Game {
     
     public Game() {
 			splash = new Grid(5,7, "images/splash.png");
+      splash.fullscreen();
     	grid = new Grid(15,20,"");
       msElapsed = 0;
       particleCount = 0;
@@ -72,31 +73,31 @@ public class Game {
     }
 	
 		public void level(int level){
-		userRow = (grid.getNumRows()/2)+1;
-    userCol = 0;
-		this.level = level;
-		grid.setImage(getUserLoc(), userPic);
-		grid = new Grid("images/bgInazuma.png");
-	if (level == 1) {
-		grid.setBackground("images/bgMondstadt.png");
-		particle = "images/getA.png";
-		region = "Mondstadt";
-	}
-	if (level == 2) {
-		grid.setBackground("images/bgLiyue.png");
-		particle = "images/getG.png";
-		region = "Liyue";
-	}
-	if (level == 3) {
-			grid.setBackground("images/bgInazuma.png");
-		particle = "images/getE.png";
-		region = "Inazuma";
-	}
-	System.out.println("Level " + level + " selected");
-	splash.close();
-	System.out.println("Splash Closed");
+      userRow = (grid.getNumRows()/2)+1;
+      userCol = 0;
+      this.level = level;
+      grid.setImage(getUserLoc(), userPic);
+      grid = new Grid("images/bgInazuma.png");
+      if (level == 1) {
+        grid.setBackground("images/bgMondstadt.png");
+        particle = "images/getA.png";
+        region = "Mondstadt";
+      }
+      if (level == 2) {
+        grid.setBackground("images/bgLiyue.png");
+        particle = "images/getG.png";
+        region = "Liyue";
+      }
+      if (level == 3) {
+        grid.setBackground("images/bgInazuma.png");
+        particle = "images/getE.png";
+        region = "Inazuma";
+      }
+      System.out.println("Level " + level + " selected");
+      splash.close();
+      System.out.println("Splash Closed");
 
-}
+    }
 
 		public void setBadges() {
 		splash.setTitle("Level Selection");
