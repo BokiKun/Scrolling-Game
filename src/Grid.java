@@ -1,8 +1,9 @@
 /*
  * Updated version of Grid class
- * Date 6/18/2020
+ * Date 6/6/2022
  * Includes ability to move and scale the background image
  * Includes ability to add a picture to multiple cells
+ * Cells resize to fit the window frame
  */
 
 import java.awt.*;
@@ -250,9 +251,6 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 		}
 		repaint();
 	}
-
-
-
 
 
 	// ------------------ HELPER METHODS -----------------//
