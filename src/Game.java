@@ -76,7 +76,7 @@ public class Game {
     userCol = 0;
 		this.level = level;
 		grid.setImage(getUserLoc(), userPic);
-		grid = new Grid("images/bgInazuma.png");
+		grid = new Grid(15, 20, "images/bgInazuma.png");
 	if (level == 1) {
 		grid.setBackground("images/bgMondstadt.png");
 		particle = "images/getA.png";
