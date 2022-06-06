@@ -7,13 +7,13 @@ public class Game {
 
     private Grid grid;
 		private Grid splash;
-		private boolean hasSpawned = false;
 		private boolean isValid;
     private int userRow;
     private int userCol;
     private int msElapsed;
     private int timesAvoid; 
 	  private int particleCount;
+		private int totParticles;
     private int mondstadtScore;
     private int liyueScore;
     private int inazumaScore;
@@ -89,15 +89,15 @@ public class Game {
       System.out.println("Level " + level + " selected");
       splash.close();
   while (!isLevelOver()) {
-        grid.pause(50);
+        grid.pause(25);
         handleKeyPress();
-        if (msElapsed % 250 == 0) {
+        if (msElapsed % 150 == 0) {
           scrollLeft();
           populateRightEdge();
           handleCollision(getUserLoc());
         }
         updateTitle();
-	    msElapsed += 50;
+	    msElapsed += 25;
       }
     }
 
@@ -227,17 +227,22 @@ public class Game {
     }
 
 		public void spawnParticles() {
-			if(Math.random()*4 > 3) hasSpawned = true;
+			totParticles++;
 			int pRow;
-			if(hasSpawned) {
-			System.out.println("!");
+			if(totParticles % 4 == 0) {
+			System.out.print("!");
 			pRow = userRow + (int)(Math.random()*5-2);
-			if(pRow > grid.getNumRows()-1) pRow = grid.getNumRows()-1;
-			if(pRow < 0) pRow = 0;
-			Location loc = new Location(pRow, grid.getNumCols()-1);
+			if(pRow > grid.getNumRows()-2) 
+				pRow = grid.getNumRows()-2;
+			if(pRow < 1) pRow = 1;
+				Location loc = new Location(pRow, grid.getNumCols()-1);
 			grid.setImage(loc, particle);
+				loc = new Location(pRow-1, grid.getNumCols()-1);
+			grid.setImage(loc, null);
+								loc = new Location(pRow+1, grid.getNumCols()-1);
+			grid.setImage(loc, null);
 				}
-			hasSpawned = false;
+			
 		}
     
     public void populateRightEdge(){
