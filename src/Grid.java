@@ -291,9 +291,9 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		System.out.println("cells setup with : " + numRows + "," + numCols);
-		System.out.println(cells.length + "," + cells[0].length);
-		System.out.println(getNumRows() + "," + getNumCols());
-		System.out.println(getCellHeight() + "," + getCellWidth());
+		//System.out.println(cells.length + "," + cells[0].length);
+		//System.out.println(getNumRows() + "," + getNumCols());
+		//System.out.println(getCellHeight() + "," + getCellWidth());
 
 		if(!isFullScreen){
 			int cellSize = Math.max(Math.min(frameHeight / getNumRows(), frameWidth / getNumCols()), 1);
