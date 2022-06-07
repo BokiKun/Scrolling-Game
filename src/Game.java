@@ -7,25 +7,27 @@ public class Game {
 
     private Grid grid;
 		private Grid splash;
+		private boolean isValid;
     private int userRow;
     private int userCol;
     private int msElapsed;
     private int timesAvoid; 
 	  private int particleCount;
+		private int totParticles;
     private int mondstadtScore;
     private int liyueScore;
     private int inazumaScore;
 		private int level;
     private String userPic = "images/traveler.png";
     private String bomb = "images/avoid.png";
-    private String particle;
+    private String particle = "images/getE";
 		private String region;
+	
 
     
     public Game() {
-			splash = new Grid(5,7, "images/splash.png");
-      splash.fullscreen();
     	grid = new Grid(15,20,"");
+			openSplash();
       msElapsed = 0;
       particleCount = 0;
       timesAvoid = 0;
@@ -34,13 +36,11 @@ public class Game {
     }
     
     public void play() {
-			boolean start = true;
-      //WavPlayer.play("sounds/Ricky Mondsat.wav");
-
-			while (start) {
+		boolean start = true;
+    //WavPlayer.play("sounds/Ricky Mondsat.wav");
+		while (start) {
 		//start Game
-		setBadges();
-		boolean isValid = false;
+		openSplash();
 		while(!isValid) {
 		Location selection = splash.waitForClick();
 		if (selection.equals(new Location(3, 2))) {
@@ -56,19 +56,10 @@ public class Game {
 			isValid = true;
 		}
 			}
-      while (!isGameOver()) {
-        grid.pause(50);
-        handleKeyPress();
-        if (msElapsed % 250 == 0) {
-          scrollLeft();
-          populateRightEdge();
-          handleCollision(getUserLoc());
-        }
-        updateTitle();
-	    msElapsed += 50;
-      }
 			updateScore();
+			System.out.println("M" + mondstadtScore + "\tL" + liyueScore + "\tI" +inazumaScore);
 			grid.showMessageDialog("You have reached the goal!");
+			isValid = false;
 			}
     }
 	
@@ -78,6 +69,7 @@ public class Game {
       this.level = level;
       grid.setImage(getUserLoc(), userPic);
       grid = new Grid(15, 20, "images/bgInazuma.png");
+			grid.fullscreen();
       if (level == 1) {
         grid.setBackground("images/bgMondstadt.png");
         particle = "images/getA.png";
@@ -93,12 +85,30 @@ public class Game {
         particle = "images/getE.png";
         region = "Inazuma";
       }
+			
       System.out.println("Level " + level + " selected");
       splash.close();
-      System.out.println("Splash Closed");
-
+  while (!isLevelOver()) {
+        grid.pause(25);
+        handleKeyPress();
+        if (msElapsed % 150 == 0) {
+          scrollLeft();
+          populateRightEdge();
+          handleCollision(getUserLoc());
+        }
+        updateTitle();
+	    msElapsed += 25;
+      }
     }
 
+		public void openSplash() {
+			isValid = false;
+			grid.close();
+			splash = new Grid(5,7, "images/splash.png");
+			setBadges();
+			splash.fullscreen();
+		}
+	
 		public void setBadges() {
 		splash.setTitle("Level Selection");
 		grid.close();
@@ -139,7 +149,7 @@ public class Game {
 		splash.setImage(badgeLoc, "images/badges/bronze.png");
 	} 
 }
-	
+
 		public void handleKeyPress(){
   
       //check last key pressed
@@ -220,6 +230,25 @@ public class Game {
         
   
     }
+
+		public void spawnParticles() {
+			totParticles++;
+			int pRow;
+			if(totParticles % 4 == 0) {
+			System.out.print("!");
+			pRow = userRow + (int)(Math.random()*5-2);
+			if(pRow > grid.getNumRows()-2) 
+				pRow = grid.getNumRows()-2;
+			if(pRow < 1) pRow = 1;
+				Location loc = new Location(pRow, grid.getNumCols()-1);
+			grid.setImage(loc, particle);
+				loc = new Location(pRow-1, grid.getNumCols()-1);
+			grid.setImage(loc, null);
+								loc = new Location(pRow+1, grid.getNumCols()-1);
+			grid.setImage(loc, null);
+				}
+			
+		}
     
     public void populateRightEdge(){
       int lastRow = grid.getNumRows()-1;
@@ -233,8 +262,8 @@ public class Game {
       grid.setImage(loc,bomb);
       handleCollision(loc);
     }
-
     }
+			spawnParticles();
     }
 	
 		public Location getUserLoc() {
@@ -274,15 +303,19 @@ public class Game {
             System.out.println("over");
           }
         }
-public void updateScore() {
-	if (isGameOver()) {
+
+		public void updateScore() {
+	if (isLevelOver()) {
 		if(level == 1) {
+			if(getScore() > mondstadtScore)
 			mondstadtScore = getScore();
 		}
 		if(level == 2) {
+			if(getScore() > liyueScore)
 			liyueScore = getScore();
 		}
 		if(level == 3) {
+			if(getScore() > inazumaScore)
 			inazumaScore = getScore();
 		}
 	}
@@ -293,16 +326,16 @@ public void updateScore() {
 }
 	
     public int getScore() {
-      return particleCount + (msElapsed*10);
+      return ((particleCount*250) + (msElapsed/6));
     }
     
     public void updateTitle() {
       grid.setTitle(region + "  Score:  " + getScore());
     }
     
-    public boolean isGameOver() {
+    public boolean isLevelOver() {
 			if (timesAvoid == 5) return true;
-			if ((msElapsed/250) > 50) return true;
+			if ((msElapsed) > 60000) return true; //delete multiplication once finalized
       else return false;
       //ways to wing 1) reach end or 2)hit bombs 3 times
     }

@@ -1,8 +1,9 @@
 /*
  * Updated version of Grid class
- * Date 6/18/2020
+ * Date 6/6/2022
  * Includes ability to move and scale the background image
  * Includes ability to add a picture to multiple cells
+ * Cells resize to fit the window frame
  */
 
 import java.awt.*;
@@ -252,9 +253,6 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 	}
 
 
-
-
-
 	// ------------------ HELPER METHODS -----------------//
 	public void load(String imageFileName) {
 		showFullImage(loadImage(imageFileName));
@@ -293,9 +291,9 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		System.out.println("cells setup with : " + numRows + "," + numCols);
-		System.out.println(cells.length + "," + cells[0].length);
-		System.out.println(getNumRows() + "," + getNumCols());
-		System.out.println(getCellHeight() + "," + getCellWidth());
+		//System.out.println(cells.length + "," + cells[0].length);
+		//System.out.println(getNumRows() + "," + getNumCols());
+		//System.out.println(getCellHeight() + "," + getCellWidth());
 
 		if(!isFullScreen){
 			int cellSize = Math.max(Math.min(frameHeight / getNumRows(), frameWidth / getNumCols()), 1);
