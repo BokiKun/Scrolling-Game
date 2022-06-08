@@ -143,7 +143,6 @@ public class Game {
       if (msElapsed % 150 == 0) {
         scrollLeft();
         populateRightEdge();
-        handleCollision(getUserLoc());
       }
       updateTitle();
     msElapsed += 25;
@@ -302,17 +301,12 @@ public class Game {
       }
       
       //WHAT IS THIS SECTION OF CODE DOING?
-      Location locBomb = new Location(userRow,userCol-1);
-      if(
-      grid.getImage(locBomb).equals(bomb) && 
-      (grid.checkLastKeyPressed()==83 || 
-      grid.checkLastKeyPressed()==75 || 
-      grid.checkLastKeyPressed()==40)){
-
-      System.out.println("yes");
+      Location locBomb = new Location(userRow-1,userCol);
+      if(bomb.equals(grid.getImage(locBomb)))
+      handleCollision();
 
       }
-    }
+
 
     //goes left
     if(key==65 || key==74 || key==37){
@@ -376,7 +370,7 @@ public class Game {
 
       if(random < thresh){
         grid.setImage(loc,bomb);
-        handleCollision(loc);
+
       }
     }
 
@@ -409,16 +403,17 @@ public class Game {
           grid.setImage(getUserLoc(), userPic);
           grid.setImage(leftLoc, rightPic);
           grid.setImage(rightLoc, null);
+          if(getUserLoc().equals(leftLoc)&& bomb.equals(grid.getImage(rightLoc)))
+          handleCollision();
         }
+
       }
     }
     grid.setImage(getUserLoc(), userPic);
   }
 
-  public void handleCollision(Location Loc) {
-    if (Loc==getUserLoc()){
+  public void handleCollision() {
       System.out.println("over");
-    }
   }
 
 	public void updateScore() {
