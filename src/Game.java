@@ -189,7 +189,12 @@ public class Game {
           Location oldLoc = new Location(userRow-1, userCol);
           grid.setImage(oldLoc, null);
                   }
-              if(grid.equals(bomb) && (grid.checkLastKeyPressed()==83 || grid.checkLastKeyPressed()==75 || grid.checkLastKeyPressed()==40)){}
+          Location locBomb = new Location(userRow,userCol-1);
+          
+              if(grid.getImage(locBomb).equals(bomb) && (grid.checkLastKeyPressed()==83 || grid.checkLastKeyPressed()==75 || grid.checkLastKeyPressed()==40)){
+
+                System.out.println("yes");
+              }
                 }
 
 
