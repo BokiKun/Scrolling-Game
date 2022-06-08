@@ -1,9 +1,10 @@
 /*
  * Updated version of Grid class
- * Date 6/6/2022
+ * Date 6/8/2022
  * Includes ability to move and scale the background image
  * Includes ability to add a picture to multiple cells
  * Cells resize to fit the window frame
+ * Fixed issue if null or empty String image loaded
  */
 
 import java.awt.*;
@@ -312,14 +313,20 @@ public class Grid extends JComponent implements KeyListener, MouseListener
 	}
 
 	private BufferedImage loadImage(String imageFileName) {
-		final URL url = getClass().getResource(imageFileName);
-		if (url == null) {
-			throw new RuntimeException("cannot find file:  " + imageFileName);
-		}
-		try {
-			return ImageIO.read(url);
-		} catch (IOException e) {
-			throw new RuntimeException("unable to read from file:  " + imageFileName);
+		
+		if(imageFileName == null || "".equals(imageFileName)){
+			System.out.println("Image is null or \"\"");
+			return null;
+		} else{
+			final URL url = getClass().getResource(imageFileName);
+			if (url == null) {
+				throw new RuntimeException("cannot find file:  " + imageFileName);
+			}
+			try {
+				return ImageIO.read(url);
+			} catch (IOException e) {
+				throw new RuntimeException("unable to read from file:  " + imageFileName);
+			}
 		}
 	}
 
