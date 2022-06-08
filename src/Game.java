@@ -10,6 +10,7 @@ public class Game {
 		private boolean isValid;
     private int userRow;
     private int userCol;
+		private int pRow;
     private int msElapsed;
     private int timesAvoid; 
 	  private int particleCount;
@@ -38,22 +39,22 @@ public class Game {
   public void play() {
 
 		boolean start = true;
-    WavPlayer.play("sounds/Ricky Mondsat.wav");
+   // WavPlayer.play("sounds/Ricky Mondsat.wav");
 
 		while (start) {
 		//start Game
 		openSplash();
 		while(!isValid) {
 		Location selection = splash.waitForClick();
-		if (selection.equals(new Location(3, 2))) {
+		if (selection.equals(new Location(3, 1))) {
 			level(1);
 			isValid = true;
 		}
-		if (selection.equals(new Location(3, 4))) {
+		if (selection.equals(new Location(3, 3))) {
 			level(2);
 			isValid = true;
 		}
-		if (selection.equals(new Location(3, 6))) {
+		if (selection.equals(new Location(3, 5))) {
 			level(3);
 			isValid = true;
 		}
@@ -61,52 +62,12 @@ public class Game {
 			updateScore();
 			System.out.println("M" + mondstadtScore + "\tL" + liyueScore + "\tI" +inazumaScore);
 			grid.showMessageDialog("You have reached the goal!");
+			grid.close();
 			isValid = false;
+			
 			}
     }
-	/* 
-		public void level(int level){
-      userRow = (grid.getNumRows()/2)+1;
-      userCol = 0;
-      this.level = level;
-      grid.setImage(getUserLoc(), userPic);
-      grid = new Grid(15, 20, "images/bgInazuma.png");
-			grid.fullscreen();
-      if (level == 1) {
-        grid.setBackground("images/bgMondstadt.png");
-        particle = "images/getA.png";
-        region = "Mondstadt";
-      }
-      if (level == 2) {
-        grid.setBackground("images/bgLiyue.png");
-        particle = "images/getG.png";
-        region = "Liyue";
-      }
-      if (level == 3) {
-        grid.setBackground("images/bgInazuma.png");
-        particle = "images/getE.png";
-        region = "Inazuma";
-      }
-			
-      System.out.println("Level " + level + " selected");
-      splash.close();
-  while (!isLevelOver()) {
-        grid.pause(25);
-        handleKeyPress();
-        if (msElapsed % 150 == 0) {
-          scrollLeft();
-          populateRightEdge();
-        }
-      }
-
-
-      updateScore();
-      System.out.println("M" + mondstadtScore + "\tL" + liyueScore + "\tI" +inazumaScore);
-      grid.showMessageDialog("You have reached the goal!");
-      isValid = false;
-    }
-  }
-	*/
+	
   public void level(int level){
 
     //Level Grid Setup
@@ -114,6 +75,7 @@ public class Game {
     userRow = (grid.getNumRows()/2)+1;
     userCol = 0;
     this.level = level;
+		pRow = (grid.getNumRows()/2)+1;
     grid.setImage(getUserLoc(), userPic);
     grid.fullscreen();
 
@@ -148,14 +110,10 @@ public class Game {
     msElapsed += 25;
     }
 
-    //close grid after level ends
-    grid.close();
-
   }
 
   public void openSplash() {
     isValid = false;
-    //grid.close();
     splash = new Grid(5,7, "images/splash.png");
     setBadges();
     splash.fullscreen();
@@ -168,7 +126,7 @@ public class Game {
 		System.out.println("Gameplay Closed");
 
     //mondstadt
-    Location badgeLoc = new Location(3,2);
+    Location badgeLoc = new Location(3,1);
     splash.setImage(badgeLoc, "images/badges/blank.png");
     if(mondstadtScore > 30000) {
       splash.setImage(badgeLoc, "images/badges/gold.png");
@@ -179,7 +137,7 @@ public class Game {
     } 
 	
     //liyue
-    badgeLoc = new Location(3,4);
+    badgeLoc = new Location(3,3);
     splash.setImage(badgeLoc, "images/badges/blank.png");
     if(liyueScore > 30000) {
       splash.setImage(badgeLoc, "images/badges/gold.png");
@@ -190,7 +148,7 @@ public class Game {
     } 
 
     //inazuma
-    badgeLoc = new Location(3,6);
+    badgeLoc = new Location(3,5);
     splash.setImage(badgeLoc, "images/badges/blank.png");
     if(inazumaScore > 30000) {
       splash.setImage(badgeLoc, "images/badges/gold.png");
@@ -339,11 +297,10 @@ public class Game {
 
   public void spawnParticles() {
     totParticles++;
-    int pRow;
 
     if(totParticles % 4 == 0) {
       System.out.print("!");
-      pRow = userRow + (int)(Math.random()*5-2);
+      pRow += (int)(Math.random()*6-3);
       if(pRow > grid.getNumRows()-2) 
         pRow = grid.getNumRows()-2;
       if(pRow < 1) pRow = 1;
@@ -412,10 +369,16 @@ public class Game {
     grid.setImage(getUserLoc(), userPic);
   }
 
-  public void handleCollision() {
-      System.out.println("over");
+  public void handleCollision(String object) {
+		if (object.equals(particle)) {
+				System.out.print(" +1 ");
+		particleCount++;
+		if(object.equals(bomb)) {
+				System.out.print(" -1 ");
+		timesAvoid++;
+		}
   }
-
+		}
 	public void updateScore() {
 	  if (isLevelOver()) {
       if(level == 1) {
