@@ -181,67 +181,7 @@ public class Game {
         grid.setImage(oldLoc, null);
       }
     }
-
-    /*
-      //if I push down arrow, then plane goes down
-      if(key == 83 || key==75 || key==40){
-          //check case where out of boundsd
-            if(userRow < grid.getNumRows()-1){
-          //change the field for userrow
-          Location locBomb = new Location(userRow,userCol-1);
-          
-          if(bomb.equals(grid.getImage(locBomb)) && (grid.checkLastKeyPressed()==83 || grid.checkLastKeyPressed()==75 || grid.checkLastKeyPressed()==40)){
-          Location pop = new Location(userRow, userCol+5);
-          grid.setImage(pop, userPic);
-          
-          Location oldLoc = new Location(userRow, userCol-5);
-          grid.setImage(oldLoc, null);
-          }
-
-          else{
-          userRow++;
-          
-          //shift the user picture up in the array
-          Location loc = new Location(userRow, userCol);
-          grid.setImage(loc, userPic);
-          
-          Location oldLoc = new Location(userRow-1, userCol);
-          grid.setImage(oldLoc, null);
-                  }
-                }
-              }
-
-
-          //goes left
-      if(key==65 || key==74 || key==37){
-        if(userCol != 0){
-          //change the field for userrow
-          Location locBomb = new Location(userRow,userCol-1);
-          
-          if(bomb.equals(grid.getImage(locBomb)) && (grid.checkLastKeyPressed()==83 || grid.checkLastKeyPressed()==75 || grid.checkLastKeyPressed()==40)){
-          Location pop = new Location(userRow, userCol+5);
-          grid.setImage(pop, userPic);
-          
-          Location oldLoc = new Location(userRow, userCol-5);
-          grid.setImage(oldLoc, null);
-          }
-          else{
-          userCol--;
-          
-          //shift the user picture up in the array
-          Location loc = new Location(userRow, userCol);
-          grid.setImage(loc, userPic);
-          
-          Location oldLoc = new Location(userRow,userCol+1);
-          grid.setImage(oldLoc, null);
-                  }
-        }
-      }
-          //goes right
-      if(key==68 || key==76 || key==39){ 
-        if(userCol < grid.getNumCols()-1)
-
-*/
+  
 
     //if I push down arrow, then plane goes down
     if(key == 83 || key==75 || key==40){
@@ -279,7 +219,12 @@ public class Game {
         Location oldLoc = new Location(userRow,userCol+1);
         grid.setImage(oldLoc, null);
       }
-    }
+      Location locBomb = new Location(userRow-1,userCol);
+      if(bomb.equals(grid.getImage(locBomb)))
+      handleCollision();
+
+      }
+    
         
     //goes right
     if(key==68 || key==76 || key==39){ 
@@ -292,8 +237,19 @@ public class Game {
         Location oldLoc = new Location(userRow, userCol-1);
         grid.setImage(oldLoc, null);
       }
+
+
+      if(userCol < grid.getNumCols()-1){
+      Location locBomb = new Location(userRow,userCol+1);
+        if(bomb.equals(grid.getImage(locBomb))){
+           handleCollision();
+        }
+      }
     }
   }
+  
+
+
 
   public void spawnParticles() {
     totParticles++;
@@ -359,9 +315,11 @@ public class Game {
         if(!userPic.equals(rightPic)){
           grid.setImage(getUserLoc(), userPic);
           grid.setImage(leftLoc, rightPic);
+          if(getUserLoc().equals(leftLoc)&& bomb.equals(grid.getImage(rightLoc))){
+            handleCollision();
+          }
           grid.setImage(rightLoc, null);
-          if(getUserLoc().equals(leftLoc)&& bomb.equals(grid.getImage(rightLoc)))
-          handleCollision();
+
         }
 
       }
