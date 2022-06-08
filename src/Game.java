@@ -94,7 +94,6 @@ public class Game {
         if (msElapsed % 150 == 0) {
           scrollLeft();
           populateRightEdge();
-          handleCollision(getUserLoc());
         }
         updateTitle();
 	    msElapsed += 25;
@@ -179,7 +178,17 @@ public class Game {
           //check case where out of boundsd
             if(userRow < grid.getNumRows()-1){
           //change the field for userrow
+          Location locBomb = new Location(userRow,userCol-1);
           
+          if(bomb.equals(grid.getImage(locBomb)) && (grid.checkLastKeyPressed()==83 || grid.checkLastKeyPressed()==75 || grid.checkLastKeyPressed()==40)){
+          Location pop = new Location(userRow, userCol+5);
+          grid.setImage(pop, userPic);
+          
+          Location oldLoc = new Location(userRow, userCol-5);
+          grid.setImage(oldLoc, null);
+          }
+
+          else{
           userRow++;
           
           //shift the user picture up in the array
@@ -189,21 +198,24 @@ public class Game {
           Location oldLoc = new Location(userRow-1, userCol);
           grid.setImage(oldLoc, null);
                   }
-          Location locBomb = new Location(userRow,userCol-1);
-          
-              if(grid.getImage(locBomb).equals(bomb) && (grid.checkLastKeyPressed()==83 || grid.checkLastKeyPressed()==75 || grid.checkLastKeyPressed()==40)){
-
-                System.out.println("yes");
-              }
                 }
-
+              }
 
 
           //goes left
       if(key==65 || key==74 || key==37){
         if(userCol != 0){
           //change the field for userrow
+          Location locBomb = new Location(userRow,userCol-1);
           
+          if(bomb.equals(grid.getImage(locBomb)) && (grid.checkLastKeyPressed()==83 || grid.checkLastKeyPressed()==75 || grid.checkLastKeyPressed()==40)){
+          Location pop = new Location(userRow, userCol+5);
+          grid.setImage(pop, userPic);
+          
+          Location oldLoc = new Location(userRow, userCol-5);
+          grid.setImage(oldLoc, null);
+          }
+          else{
           userCol--;
           
           //shift the user picture up in the array
@@ -214,6 +226,7 @@ public class Game {
           grid.setImage(oldLoc, null);
                   }
         }
+      }
           //goes right
       if(key==68 || key==76 || key==39){ 
         if(userCol < grid.getNumCols()-1)
