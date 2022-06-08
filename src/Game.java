@@ -61,6 +61,9 @@ public class Game {
 			}
 			updateScore();
 			System.out.println("M" + mondstadtScore + "\tL" + liyueScore + "\tI" +inazumaScore);
+			if(msElapsed < 55000)
+				grid.showMessageDialog("You ran into too many bombs. KO.");
+			else if(msElapsed >= 60000)
 			grid.showMessageDialog("You have reached the goal!");
 			grid.close();
 			isValid = false;
@@ -201,7 +204,7 @@ public class Game {
       //WHAT IS THIS SECTION OF CODE DOING?
       Location locBomb = new Location(userRow-1,userCol);
       if(bomb.equals(grid.getImage(locBomb)))
-      handleCollision();
+      handleCollisionB();
 
       }
 
@@ -221,7 +224,7 @@ public class Game {
       }
       Location locBomb = new Location(userRow-1,userCol);
       if(bomb.equals(grid.getImage(locBomb)))
-      handleCollision();
+      handleCollisionB();
 
       }
     
@@ -242,14 +245,11 @@ public class Game {
       if(userCol < grid.getNumCols()-1){
       Location locBomb = new Location(userRow,userCol+1);
         if(bomb.equals(grid.getImage(locBomb))){
-           handleCollision();
+           handleCollisionB();
         }
       }
     }
   }
-  
-
-
 
   public void spawnParticles() {
     totParticles++;
@@ -316,7 +316,7 @@ public class Game {
           grid.setImage(getUserLoc(), userPic);
           grid.setImage(leftLoc, rightPic);
           if(getUserLoc().equals(leftLoc)&& bomb.equals(grid.getImage(rightLoc))){
-            handleCollision();
+            handleCollisionB();
           }
           grid.setImage(rightLoc, null);
 
@@ -327,16 +327,15 @@ public class Game {
     grid.setImage(getUserLoc(), userPic);
   }
 
-  public void handleCollision(String object) {
-		if (object.equals(particle)) {
-				System.out.print(" +1 ");
-		particleCount++;
-		if(object.equals(bomb)) {
-				System.out.print(" -1 ");
+	public void handleCollisionP() {
+		System.out.print("");
+	}
+  public void handleCollisionB() {
+		System.out.print("Bomb");
 		timesAvoid++;
-		}
-  }
-		}
+		if(userRow != grid.getNumRows()-1)
+		userRow++;
+	}
 	public void updateScore() {
 	  if (isLevelOver()) {
       if(level == 1) {
@@ -366,7 +365,7 @@ public class Game {
   }
     
   public boolean isLevelOver() {
-    if (timesAvoid == 5) return true;
+    if (timesAvoid == 10) return true;
     if ((msElapsed) > 60000) return true; //delete multiplication once finalized
     else return false;
     //ways to wing 1) reach end or 2)hit bombs 3 times
