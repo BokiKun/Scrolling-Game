@@ -59,12 +59,14 @@ public class Game {
 			isValid = true;
 		}
 			}
-			updateScore();
-			System.out.println("M" + mondstadtScore + "\tL" + liyueScore + "\tI" +inazumaScore);
+						System.out.println("Run Time: " + msElapsed + " ms");
 			if(msElapsed < 55000)
 				grid.showMessageDialog("You ran into too many bombs. KO.");
 			else if(msElapsed >= 60000)
 			grid.showMessageDialog("You have reached the goal!");
+			updateScore();
+			System.out.println("M" + mondstadtScore + "\tL" + liyueScore + "\tI" +inazumaScore);
+			
 			grid.close();
 			isValid = false;
 			
@@ -330,12 +332,14 @@ public class Game {
 	public void handleCollisionP() {
 		System.out.print("");
 	}
-  public void handleCollisionB() {
+  
+	public void handleCollisionB() {
 		System.out.print("Bomb");
 		timesAvoid++;
 		if(userRow != grid.getNumRows()-1)
 		userRow++;
 	}
+	
 	public void updateScore() {
 	  if (isLevelOver()) {
       if(level == 1) {
@@ -355,7 +359,7 @@ public class Game {
     timesAvoid = 0;
     particleCount = 0;
   }
-	
+
   public int getScore() {
     return ((particleCount*250) + (msElapsed/6));
   }
@@ -368,12 +372,7 @@ public class Game {
     if (timesAvoid == 10) return true;
     if ((msElapsed) > 60000) return true; //delete multiplication once finalized
     else return false;
-    //ways to wing 1) reach end or 2)hit bombs 3 times
+    //ways to win 1) reach end or 2)hit bombs 3 times
   }
-
-  public void addGravity(){
-
-  }
-    
   
 }
