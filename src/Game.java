@@ -416,9 +416,6 @@ public class Game {
     else return false;
     //ways to win 1) reach end or 2)hit bombs 3 times
   }
-<<<<<<< HEAD
 
-=======
->>>>>>> c5c1f79f20640fffe3246b27ac1e2131aab2d4e7
   
 }
