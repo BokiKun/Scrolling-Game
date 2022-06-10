@@ -10,6 +10,7 @@ public class Game {
 		private boolean isValid;
     private int userRow;
     private int userCol;
+		private int pRow;
     private int msElapsed;
     private int timesAvoid; 
 	  private int particleCount;
@@ -38,36 +39,39 @@ public class Game {
   public void play() {
 
 		boolean start = true;
-    WavPlayer.play("sounds/Ricky Mondsat.wav");
+   // WavPlayer.play("sounds/Ricky Mondsat.wav");
 
 		while (start) {
-      //start Game with splash screen
-      openSplash();
-
-      //select an appropriate level button --> run a level
-      while(!isValid) {
-        Location selection = splash.waitForClick();
-        if (selection.equals(new Location(3, 2))) {
-          level(1);
-          isValid = true;
-        }
-        if (selection.equals(new Location(3, 4))) {
-          level(2);
-          isValid = true;
-        }
-        if (selection.equals(new Location(3, 6))) {
-          level(3);
-          isValid = true;
-        }
-      }
-
-
-      updateScore();
-      System.out.println("M" + mondstadtScore + "\tL" + liyueScore + "\tI" +inazumaScore);
-      grid.showMessageDialog("You have reached the goal!");
-      isValid = false;
+		//start Game
+		openSplash();
+		while(!isValid) {
+		Location selection = splash.waitForClick();
+		if (selection.equals(new Location(3, 1))) {
+			level(1);
+			isValid = true;
+		}
+		if (selection.equals(new Location(3, 3))) {
+			level(2);
+			isValid = true;
+		}
+		if (selection.equals(new Location(3, 5))) {
+			level(3);
+			isValid = true;
+		}
+			}
+						System.out.println("Run Time: " + msElapsed + " ms");
+			if(msElapsed < 55000)
+				grid.showMessageDialog("You ran into too many bombs. KO.");
+			else if(msElapsed >= 60000)
+			grid.showMessageDialog("You have reached the goal!");
+			updateScore();
+			System.out.println("M" + mondstadtScore + "\tL" + liyueScore + "\tI" +inazumaScore);
+			
+			grid.close();
+			isValid = false;
+			
+			}
     }
-  }
 	
   public void level(int level){
 
@@ -76,6 +80,7 @@ public class Game {
     userRow = (grid.getNumRows()/2)+1;
     userCol = 0;
     this.level = level;
+		pRow = (grid.getNumRows()/2)+1;
     grid.setImage(getUserLoc(), userPic);
     grid.fullscreen();
 
@@ -105,20 +110,15 @@ public class Game {
       if (msElapsed % 150 == 0) {
         scrollLeft();
         populateRightEdge();
-        handleCollision(getUserLoc());
       }
       updateTitle();
     msElapsed += 25;
     }
 
-    //close grid after level ends
-    grid.close();
-
   }
 
   public void openSplash() {
     isValid = false;
-    //grid.close();
     splash = new Grid(5,7, "images/splash.png");
     setBadges();
     splash.fullscreen();
@@ -131,7 +131,7 @@ public class Game {
 		System.out.println("Gameplay Closed");
 
     //mondstadt
-    Location badgeLoc = new Location(3,2);
+    Location badgeLoc = new Location(3,1);
     splash.setImage(badgeLoc, "images/badges/blank.png");
     if(mondstadtScore > 30000) {
       splash.setImage(badgeLoc, "images/badges/gold.png");
@@ -142,7 +142,7 @@ public class Game {
     } 
 	
     //liyue
-    badgeLoc = new Location(3,4);
+    badgeLoc = new Location(3,3);
     splash.setImage(badgeLoc, "images/badges/blank.png");
     if(liyueScore > 30000) {
       splash.setImage(badgeLoc, "images/badges/gold.png");
@@ -153,7 +153,7 @@ public class Game {
     } 
 
     //inazuma
-    badgeLoc = new Location(3,6);
+    badgeLoc = new Location(3,5);
     splash.setImage(badgeLoc, "images/badges/blank.png");
     if(inazumaScore > 30000) {
       splash.setImage(badgeLoc, "images/badges/gold.png");
@@ -184,8 +184,25 @@ public class Game {
         
         Location oldLoc = new Location(userRow+1, userCol);
         grid.setImage(oldLoc, null);
-      }
-    }
+
+        if(userCol !=0){
+          Location locBomb = new Location(userRow-1,userCol);
+            if(bomb.equals(grid.getImage(locBomb))){
+               handleCollisionB();
+            }
+          }
+          if(userCol!=0){
+            Location locBomb = new Location(userRow-1,userCol);
+              if(particle.equals(grid.getImage(locBomb))){
+                 handleCollisionP();
+          }
+              }
+            }
+        }
+      
+
+  
+  
 
     //if I push down arrow, then plane goes down
     if(key == 83 || key==75 || key==40){
@@ -203,17 +220,19 @@ public class Game {
       }
       
       //WHAT IS THIS SECTION OF CODE DOING?
-      Location locBomb = new Location(userRow,userCol-1);
-      if(
-      grid.getImage(locBomb).equals(bomb) && 
-      (grid.checkLastKeyPressed()==83 || 
-      grid.checkLastKeyPressed()==75 || 
-      grid.checkLastKeyPressed()==40)){
+      if(userCol < grid.getNumRows()-1){
+        Location locBomb = new Location(userRow+1,userCol);
+          if(bomb.equals(grid.getImage(locBomb))){
+             handleCollisionB();
+          }
+        }
+        if(userCol < grid.getNumRows()-1){
+          Location locBomb = new Location(userRow+1,userCol);
+            if(particle.equals(grid.getImage(locBomb)))
+               handleCollisionP();
+            }
+          }
 
-      System.out.println("yes");
-
-      }
-    }
 
     //goes left
     if(key==65 || key==74 || key==37){
@@ -228,7 +247,20 @@ public class Game {
         Location oldLoc = new Location(userRow,userCol+1);
         grid.setImage(oldLoc, null);
       }
-    }
+      if(userCol !=0){
+        Location locBomb = new Location(userRow,userCol-1);
+          if(bomb.equals(grid.getImage(locBomb))){
+             handleCollisionB();
+          }
+        }
+        if(userCol !=0){
+          Location locBomb = new Location(userRow,userCol-1);
+            if(particle.equals(grid.getImage(locBomb)))
+               handleCollisionP();
+            }
+          }
+
+    
         
     //goes right
     if(key==68 || key==76 || key==39){ 
@@ -241,16 +273,28 @@ public class Game {
         Location oldLoc = new Location(userRow, userCol-1);
         grid.setImage(oldLoc, null);
       }
-    }
-  }
 
-  public void spawnParticles() {
+
+      if(userCol < grid.getNumCols()-1){
+      Location locBomb = new Location(userRow,userCol+1);
+        if(bomb.equals(grid.getImage(locBomb))){
+           handleCollisionB();
+        }
+      }
+      if(userCol < grid.getNumCols()-1){
+        Location locBomb = new Location(userRow,userCol+1);
+          if(particle.equals(grid.getImage(locBomb)))
+             handleCollisionP();
+          }
+        }
+      }
+
+ public void spawnParticles() {
     totParticles++;
-    int pRow;
 
     if(totParticles % 4 == 0) {
       System.out.print("!");
-      pRow = userRow + (int)(Math.random()*5-2);
+      pRow += (int)(Math.random()*6-3);
       if(pRow > grid.getNumRows()-2) 
         pRow = grid.getNumRows()-2;
       if(pRow < 1) pRow = 1;
@@ -263,12 +307,15 @@ public class Game {
     }
 
 	}
-    
+   
   public void populateRightEdge(){
 
     int lastRow = grid.getNumRows()-1;
     int lastCol = grid.getNumCols()-1;
     
+
+    
+
     for(int i=0; i<=lastRow;i++){
     
       Location loc = new Location(i,lastCol);
@@ -277,7 +324,7 @@ public class Game {
 
       if(random < thresh){
         grid.setImage(loc,bomb);
-        handleCollision(loc);
+
       }
     }
 
@@ -309,19 +356,32 @@ public class Game {
         if(!userPic.equals(rightPic)){
           grid.setImage(getUserLoc(), userPic);
           grid.setImage(leftLoc, rightPic);
+          if(getUserLoc().equals(leftLoc)&& bomb.equals(grid.getImage(rightLoc))){
+            handleCollisionB();
+          }
+          if(getUserLoc().equals(leftLoc)&& particle.equals(grid.getImage(rightLoc))){
+            handleCollisionP();
+          }
           grid.setImage(rightLoc, null);
+
         }
+
       }
     }
     grid.setImage(getUserLoc(), userPic);
   }
 
-  public void handleCollision(Location Loc) {
-    if (Loc==getUserLoc()){
-      System.out.println("over");
-    }
-  }
+	public void handleCollisionP() {
+		System.out.print("Get");
+    particleCount++;
+	}
+  
+	public void handleCollisionB() {
+		System.out.print("Bomb");
+		timesAvoid++;
 
+	}
+	
 	public void updateScore() {
 	  if (isLevelOver()) {
       if(level == 1) {
@@ -341,7 +401,7 @@ public class Game {
     timesAvoid = 0;
     particleCount = 0;
   }
-	
+
   public int getScore() {
     return ((particleCount*250) + (msElapsed/6));
   }
@@ -351,15 +411,14 @@ public class Game {
   }
     
   public boolean isLevelOver() {
-    if (timesAvoid == 5) return true;
+    if (timesAvoid == 10) return true;
     if ((msElapsed) > 60000) return true; //delete multiplication once finalized
     else return false;
-    //ways to wing 1) reach end or 2)hit bombs 3 times
+    //ways to win 1) reach end or 2)hit bombs 3 times
   }
+<<<<<<< HEAD
 
-  public void addGravity(){
-
-  }
-    
+=======
+>>>>>>> c5c1f79f20640fffe3246b27ac1e2131aab2d4e7
   
 }
