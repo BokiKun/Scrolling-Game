@@ -23,6 +23,8 @@ public class Game {
     private String bomb = "images/avoid.png";
     private String particle = "images/getE";
 		private String region;
+    private boolean invincible=false;
+    private int msElapsedInvinciblitly;
 	
 
     
@@ -32,6 +34,7 @@ public class Game {
       msElapsed = 0;
       particleCount = 0;
       timesAvoid = 0;
+      msElapsedInvinciblitly=6000;
       //updateTitle();  //called too early if no grid yet
       
     }
@@ -113,6 +116,7 @@ public class Game {
       }
       updateTitle();
     msElapsed += 25;
+    msElapsedInvinciblitly+=25;
     }
 
   }
@@ -246,16 +250,20 @@ public class Game {
         grid.setImage(loc, userPic);
         
         if(userCol !=0){
+          if(invincible==false){
           Location locBomb = new Location(userRow,userCol-1);
             if(bomb.equals(grid.getImage(locBomb))){
                handleCollisionB();
             }
           }
+        }
           if(userCol !=0){
+            if(invincible==false){
             Location locBomb = new Location(userRow,userCol-1);
               if(particle.equals(grid.getImage(locBomb)))
                  handleCollisionP();
               }
+            }
 
         Location oldLoc = new Location(userRow,userCol+1);
         grid.setImage(oldLoc, null);
@@ -277,6 +285,7 @@ public class Game {
 
             if(bomb.equals(grid.getImage(locBomb))){
                handleCollisionB();
+               
             }
           }
           if(userCol < grid.getNumCols()-1){
@@ -358,13 +367,13 @@ public class Game {
         if(!userPic.equals(rightPic)){
           grid.setImage(getUserLoc(), userPic);
           grid.setImage(leftLoc, rightPic);
-         /* if(getUserLoc().equals(leftLoc)&& bomb.equals(grid.getImage(rightLoc))){
+         if(getUserLoc().equals(leftLoc)&& bomb.equals(grid.getImage(rightLoc))){
             handleCollisionB();
           }
           if(getUserLoc().equals(leftLoc)&& particle.equals(grid.getImage(rightLoc))){
             handleCollisionP();
           }
-          */
+        
           grid.setImage(rightLoc, null);
 
         }
@@ -375,17 +384,21 @@ public class Game {
   }
 
 	public void handleCollisionP() {
+    if(!getInvB()){
 		System.out.print("Get");
     particleCount++;
+  }
 	}
   
 	public void handleCollisionB() {
-		System.out.println("Bomb");
+    if(!getInvB()){
+    System.out.println("Bomb");
     System.out.println("Bomb");
 		timesAvoid++;
-    
-
-	}
+    msElapsedInvinciblitly=0;
+    userRow+=2;
+  }
+  }
 	
 	public void updateScore() {
 	  if (isLevelOver()) {
@@ -422,5 +435,14 @@ public class Game {
     //ways to win 1) reach end or 2)hit bombs 3 times
   }
 
-  
+public boolean getInvB(){
+
+  if (msElapsedInvinciblitly>=4500){
+    return false;
+  }
+  else
+  return true;
+}
+
+
 }
