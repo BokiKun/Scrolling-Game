@@ -182,21 +182,23 @@ public class Game {
         Location loc = new Location(userRow, userCol);
         grid.setImage(loc, userPic);
         
-        Location oldLoc = new Location(userRow+1, userCol);
-        grid.setImage(oldLoc, null);
-
-        if(userCol !=0){
+        if(userRow !=0){
           Location locBomb = new Location(userRow-1,userCol);
             if(bomb.equals(grid.getImage(locBomb))){
                handleCollisionB();
             }
           }
-          if(userCol!=0){
+          if(userRow!=0){
             Location locBomb = new Location(userRow-1,userCol);
               if(particle.equals(grid.getImage(locBomb))){
                  handleCollisionP();
           }
               }
+
+        Location oldLoc = new Location(userRow+1, userCol);
+        grid.setImage(oldLoc, null);
+
+
             }
         }
       
@@ -215,22 +217,21 @@ public class Game {
         Location loc = new Location(userRow, userCol);
         grid.setImage(loc, userPic);
           
+        if(userRow < grid.getNumRows()-1){
+          Location locBomb = new Location(userRow+1,userCol);
+            if(bomb.equals(grid.getImage(locBomb))){
+               handleCollisionB();
+            }
+          }
+          if(userRow < grid.getNumRows()-1){
+            Location locBomb = new Location(userRow+1,userCol);
+              if(particle.equals(grid.getImage(locBomb)))
+                 handleCollisionP();
+              }
+
         Location oldLoc = new Location(userRow-1, userCol);
         grid.setImage(oldLoc, null);
       }
-      
-      //WHAT IS THIS SECTION OF CODE DOING?
-      if(userCol < grid.getNumRows()-1){
-        Location locBomb = new Location(userRow+1,userCol);
-          if(bomb.equals(grid.getImage(locBomb))){
-             handleCollisionB();
-          }
-        }
-        if(userCol < grid.getNumRows()-1){
-          Location locBomb = new Location(userRow+1,userCol);
-            if(particle.equals(grid.getImage(locBomb)))
-               handleCollisionP();
-            }
           }
 
 
@@ -244,20 +245,22 @@ public class Game {
         Location loc = new Location(userRow, userCol);
         grid.setImage(loc, userPic);
         
+        if(userCol !=0){
+          Location locBomb = new Location(userRow,userCol-1);
+            if(bomb.equals(grid.getImage(locBomb))){
+               handleCollisionB();
+            }
+          }
+          if(userCol !=0){
+            Location locBomb = new Location(userRow,userCol-1);
+              if(particle.equals(grid.getImage(locBomb)))
+                 handleCollisionP();
+              }
+
         Location oldLoc = new Location(userRow,userCol+1);
         grid.setImage(oldLoc, null);
       }
-      if(userCol !=0){
-        Location locBomb = new Location(userRow,userCol-1);
-          if(bomb.equals(grid.getImage(locBomb))){
-             handleCollisionB();
-          }
-        }
-        if(userCol !=0){
-          Location locBomb = new Location(userRow,userCol-1);
-            if(particle.equals(grid.getImage(locBomb)))
-               handleCollisionP();
-            }
+
           }
 
     
@@ -269,23 +272,22 @@ public class Game {
         //shift the user picture up in the array
         Location loc = new Location(userRow,userCol);
         grid.setImage(loc, userPic);
-        
+        if(userCol < grid.getNumCols()-1){
+          Location locBomb = new Location(userRow,userCol+1);
+
+            if(bomb.equals(grid.getImage(locBomb))){
+               handleCollisionB();
+            }
+          }
+          if(userCol < grid.getNumCols()-1){
+            Location locBomb = new Location(userRow,userCol+1);
+              if(particle.equals(grid.getImage(locBomb)))
+                 handleCollisionP();
+              }
+
         Location oldLoc = new Location(userRow, userCol-1);
         grid.setImage(oldLoc, null);
       }
-
-
-      if(userCol < grid.getNumCols()-1){
-      Location locBomb = new Location(userRow,userCol+1);
-        if(bomb.equals(grid.getImage(locBomb))){
-           handleCollisionB();
-        }
-      }
-      if(userCol < grid.getNumCols()-1){
-        Location locBomb = new Location(userRow,userCol+1);
-          if(particle.equals(grid.getImage(locBomb)))
-             handleCollisionP();
-          }
         }
       }
 
@@ -356,12 +358,13 @@ public class Game {
         if(!userPic.equals(rightPic)){
           grid.setImage(getUserLoc(), userPic);
           grid.setImage(leftLoc, rightPic);
-          if(getUserLoc().equals(leftLoc)&& bomb.equals(grid.getImage(rightLoc))){
+         /* if(getUserLoc().equals(leftLoc)&& bomb.equals(grid.getImage(rightLoc))){
             handleCollisionB();
           }
           if(getUserLoc().equals(leftLoc)&& particle.equals(grid.getImage(rightLoc))){
             handleCollisionP();
           }
+          */
           grid.setImage(rightLoc, null);
 
         }
@@ -377,8 +380,10 @@ public class Game {
 	}
   
 	public void handleCollisionB() {
-		System.out.print("Bomb");
+		System.out.println("Bomb");
+    System.out.println("Bomb");
 		timesAvoid++;
+    
 
 	}
 	
@@ -416,9 +421,6 @@ public class Game {
     else return false;
     //ways to win 1) reach end or 2)hit bombs 3 times
   }
-<<<<<<< HEAD
 
-=======
->>>>>>> c5c1f79f20640fffe3246b27ac1e2131aab2d4e7
   
 }
