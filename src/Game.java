@@ -182,8 +182,24 @@ public class Game {
         
         Location oldLoc = new Location(userRow+1, userCol);
         grid.setImage(oldLoc, null);
-      }
-    }
+
+        if(userCol !=0){
+          Location locBomb = new Location(userRow-1,userCol);
+            if(bomb.equals(grid.getImage(locBomb))){
+               handleCollisionB();
+            }
+          }
+          if(userCol!=0){
+            Location locBomb = new Location(userRow-1,userCol);
+              if(particle.equals(grid.getImage(locBomb))){
+                 handleCollisionP();
+          }
+              }
+            }
+        }
+      
+
+  
   
 
     //if I push down arrow, then plane goes down
@@ -202,11 +218,18 @@ public class Game {
       }
       
       //WHAT IS THIS SECTION OF CODE DOING?
-      Location locBomb = new Location(userRow-1,userCol);
-      if(bomb.equals(grid.getImage(locBomb)))
-      handleCollisionB();
-
-      }
+      if(userCol < grid.getNumRows()-1){
+        Location locBomb = new Location(userRow+1,userCol);
+          if(bomb.equals(grid.getImage(locBomb))){
+             handleCollisionB();
+          }
+        }
+        if(userCol < grid.getNumRows()-1){
+          Location locBomb = new Location(userRow+1,userCol);
+            if(particle.equals(grid.getImage(locBomb)))
+               handleCollisionP();
+            }
+          }
 
 
     //goes left
@@ -222,11 +245,19 @@ public class Game {
         Location oldLoc = new Location(userRow,userCol+1);
         grid.setImage(oldLoc, null);
       }
-      Location locBomb = new Location(userRow-1,userCol);
-      if(bomb.equals(grid.getImage(locBomb)))
-      handleCollisionB();
+      if(userCol !=0){
+        Location locBomb = new Location(userRow,userCol-1);
+          if(bomb.equals(grid.getImage(locBomb))){
+             handleCollisionB();
+          }
+        }
+        if(userCol !=0){
+          Location locBomb = new Location(userRow,userCol-1);
+            if(particle.equals(grid.getImage(locBomb)))
+               handleCollisionP();
+            }
+          }
 
-      }
     
         
     //goes right
@@ -248,10 +279,15 @@ public class Game {
            handleCollisionB();
         }
       }
-    }
-  }
+      if(userCol < grid.getNumCols()-1){
+        Location locBomb = new Location(userRow,userCol+1);
+          if(particle.equals(grid.getImage(locBomb)))
+             handleCollisionP();
+          }
+        }
+      }
 
-  public void spawnParticles() {
+ public void spawnParticles() {
     totParticles++;
 
     if(totParticles % 4 == 0) {
@@ -269,12 +305,15 @@ public class Game {
     }
 
 	}
-    
+   
   public void populateRightEdge(){
 
     int lastRow = grid.getNumRows()-1;
     int lastCol = grid.getNumCols()-1;
     
+
+    
+
     for(int i=0; i<=lastRow;i++){
     
       Location loc = new Location(i,lastCol);
@@ -318,6 +357,9 @@ public class Game {
           if(getUserLoc().equals(leftLoc)&& bomb.equals(grid.getImage(rightLoc))){
             handleCollisionB();
           }
+          if(getUserLoc().equals(leftLoc)&& particle.equals(grid.getImage(rightLoc))){
+            handleCollisionP();
+          }
           grid.setImage(rightLoc, null);
 
         }
@@ -328,13 +370,13 @@ public class Game {
   }
 
 	public void handleCollisionP() {
-		System.out.print("");
+		System.out.print("Get");
+    particleCount++;
 	}
   public void handleCollisionB() {
 		System.out.print("Bomb");
 		timesAvoid++;
-		if(userRow != grid.getNumRows()-1)
-		userRow++;
+
 	}
 	public void updateScore() {
 	  if (isLevelOver()) {
@@ -371,9 +413,5 @@ public class Game {
     //ways to wing 1) reach end or 2)hit bombs 3 times
   }
 
-  public void addGravity(){
-
-  }
-    
   
 }
