@@ -24,7 +24,7 @@ public class Game {
     private String particle = "images/getE";
 		private String region;
     private boolean invincible=false;
-    private int msElapsedInvinciblitly;
+    private int msElapsedInvincibility;
 	
 
     
@@ -34,7 +34,7 @@ public class Game {
       msElapsed = 0;
       particleCount = 0;
       timesAvoid = 0;
-      msElapsedInvinciblitly=6000;
+      msElapsedInvincibility=6000;
       //updateTitle();  //called too early if no grid yet
       
     }
@@ -63,11 +63,13 @@ public class Game {
 		}
 			}
 						System.out.println("Run Time: " + msElapsed + " ms");
-			if(msElapsed < 55000)
+			System.out.println("\nBombs Hit: " +timesAvoid+ "\nParticles Collected: " + particleCount + "\nTotal Particles: " + totParticles/4);
+			updateScore();
+			if(msElapsed < 60000)
 				grid.showMessageDialog("You ran into too many bombs. KO.");
 			else if(msElapsed >= 60000)
 			grid.showMessageDialog("You have reached the goal!");
-			updateScore();
+			
 			System.out.println("M" + mondstadtScore + "\tL" + liyueScore + "\tI" +inazumaScore);
 			
 			grid.close();
@@ -81,7 +83,7 @@ public class Game {
     //Level Grid Setup
     grid = new Grid(15, 20, "images/bgInazuma.png");
     userRow = (grid.getNumRows()/2)+1;
-    userCol = 0;
+    userCol = 1;
     this.level = level;
 		pRow = (grid.getNumRows()/2)+1;
     grid.setImage(getUserLoc(), userPic);
@@ -116,7 +118,9 @@ public class Game {
       }
       updateTitle();
     msElapsed += 25;
-    msElapsedInvinciblitly+=25;
+    msElapsedInvincibility+=25;
+			if(!getInvB())
+				userPic = "images/traveler.png";
     }
 
   }
@@ -331,14 +335,13 @@ public class Game {
     
       Location loc = new Location(i,lastCol);
       double random = Math.random();
-      double thresh = 0.065;
+      double thresh = 0.06;
 
       if(random < thresh){
         grid.setImage(loc,bomb);
 
       }
     }
-
     spawnParticles();
   }
 	
@@ -384,18 +387,17 @@ public class Game {
   }
 
 	public void handleCollisionP() {
-    if(!getInvB()){
 		System.out.print("Get");
     particleCount++;
-  }
 	}
   
 	public void handleCollisionB() {
     if(!getInvB()){
-    System.out.println("Bomb");
-    System.out.println("Bomb");
+    System.out.print("Bomb");
+		userPic = "images/traveler.gif";
 		timesAvoid++;
-    msElapsedInvinciblitly=0;
+    msElapsedInvincibility = 0;
+		if(userRow < grid.getNumRows()-3)
     userRow+=2;
   }
   }
@@ -421,15 +423,15 @@ public class Game {
   }
 
   public int getScore() {
-    return ((particleCount*250) + (msElapsed/6));
+    return ((particleCount*350) + (msElapsed/6));
   }
     
   public void updateTitle() {
-    grid.setTitle(region + "  Score:  " + getScore());
+    grid.setTitle(region + "  Score:  " + getScore() + " Lives: " + (15-timesAvoid));
   }
     
   public boolean isLevelOver() {
-    if (timesAvoid == 10) return true;
+    if (timesAvoid == 15) return true;
     if ((msElapsed) > 60000) return true; //delete multiplication once finalized
     else return false;
     //ways to win 1) reach end or 2)hit bombs 3 times
@@ -437,7 +439,8 @@ public class Game {
 
 public boolean getInvB(){
 
-  if (msElapsedInvinciblitly>=4500){
+  if (msElapsedInvincibility >= 2000){
+		userPic = "images/traveler.png";
     return false;
   }
   else
