@@ -29,6 +29,15 @@ public class Game {
 
     
     public Game() {
+			Grid ms = new Grid(5,7, "images/MainScreen.jpg");
+			ms.fullscreen();
+			ms.showMessageDialog("Welcome to Teyvat, Traveler!\nAre you ready to become a Gliding Champion?");
+			
+			ms.showMessageDialog("During gameplay, use wasd or arrow keys to move.");
+			ms.showMessageDialog("You'll be avoiding bombs, and collecting each region's particles.");
+			ms.showMessageDialog("To start a level, select one of the circles on the next screen.");
+ms.close();
+
     	//grid = new Grid(15,20,""); //needed to move for .jar file
 			//openSplash();             //redundant bc its also in play() 
       msElapsed = 0;
@@ -43,7 +52,7 @@ public class Game {
 
 		boolean start = true;
    // WavPlayer.play("sounds/Ricky Mondsat.wav");
-
+		
 		while (start) {
 		//start Game
 		openSplash();
@@ -62,15 +71,12 @@ public class Game {
 			isValid = true;
 		}
 			}
-						System.out.println("Run Time: " + msElapsed + " ms");
-			System.out.println("\nBombs Hit: " +timesAvoid+ "\nParticles Collected: " + particleCount + "\nTotal Particles: " + totParticles/4);
+			System.out.println("\nRun Time: " + msElapsed + " ms\nBombs Hit: " + timesAvoid + "\nParticles Collected: " + particleCount + "\nTotal Particles: " + (totParticles/4));
 			updateScore();
-			if(msElapsed < 60000)
-				grid.showMessageDialog("You ran into too many bombs. KO.");
-			else if(msElapsed >= 60000)
-			grid.showMessageDialog("You have reached the goal!");
+			if (timesAvoid >= 15) grid.showMessageDialog("You ran into too many bombs. KO.");
+			else grid.showMessageDialog("You have reached the goal!");
 			
-			System.out.println("M" + mondstadtScore + "\tL" + liyueScore + "\tI" +inazumaScore);
+			System.out.println("M " + mondstadtScore + "\tL " + liyueScore + "\tI " +inazumaScore);
 			
 			grid.close();
 			isValid = false;
@@ -423,11 +429,11 @@ public class Game {
   }
 
   public int getScore() {
-    return ((particleCount*350) + (msElapsed/6));
+    return ((particleCount*300) + (msElapsed/6));
   }
     
   public void updateTitle() {
-    grid.setTitle(region + "  Score:  " + getScore() + " Lives: " + (15-timesAvoid));
+    grid.setTitle(region + "  Score:  " + getScore() + " Lives: " + (15-timesAvoid) + "|" + particleCount);
   }
     
   public boolean isLevelOver() {
