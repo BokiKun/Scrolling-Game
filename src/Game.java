@@ -73,8 +73,8 @@ ms.close();
 			}
 			System.out.println("\nRun Time: " + msElapsed + " ms\nBombs Hit: " + timesAvoid + "\nParticles Collected: " + particleCount + "\nTotal Particles: " + (totParticles/4));
 			updateScore();
-			if (timesAvoid >= 15) grid.showMessageDialog("You ran into too many bombs. KO.");
-			else grid.showMessageDialog("You have reached the goal!");
+			if (msElapsed >= 60000) grid.showMessageDialog("You have reached the goal!");
+			else grid.showMessageDialog("You ran into too many bombs. KO.");
 			
 			System.out.println("M " + mondstadtScore + "\tL " + liyueScore + "\tI " +inazumaScore);
 			
